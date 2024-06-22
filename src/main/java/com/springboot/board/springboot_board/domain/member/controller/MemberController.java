@@ -3,6 +3,7 @@ package com.springboot.board.springboot_board.domain.member.controller;
 import com.springboot.board.springboot_board.domain.member.dto.MemberSaveRequest;
 import com.springboot.board.springboot_board.domain.member.dto.MemberSaveResponse;
 import com.springboot.board.springboot_board.domain.member.service.MemberService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/v1/join")
-    public ResponseEntity<MemberSaveResponse> joinMember(@RequestBody MemberSaveRequest memberSaveRequest) {
+    public ResponseEntity<MemberSaveResponse> joinMember(@RequestBody @Valid MemberSaveRequest memberSaveRequest) {
 
         MemberSaveResponse member = memberService.join(memberSaveRequest);
 
