@@ -6,10 +6,7 @@ import com.springboot.board.springboot_board.domain.member.service.MemberService
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -20,9 +17,19 @@ public class MemberController {
 
     @PostMapping("/v1/join")
     public ResponseEntity<MemberSaveResponse> joinMember(@RequestBody @Valid MemberSaveRequest memberSaveRequest) {
-
         MemberSaveResponse member = memberService.join(memberSaveRequest);
-
         return ResponseEntity.ok(member);
+    }
+
+    @GetMapping("/v1/check-email")
+    public ResponseEntity<String> checkEmailDuplicate(@RequestParam String email) {
+        memberService.checkEmailDuplicate(email);
+        return ResponseEntity.ok().body("이 이메일은 사용가능 이메일 입니다");
+    }
+
+    @GetMapping("/v1/check-loginid")
+    public ResponseEntity<String> checkLoginIdDuplicate(@RequestParam String loginId) {
+        memberService.checkLonginIdDuplicate(loginId);
+        return ResponseEntity.ok().body("이 아이디는 사용가능 아이디 입니다");
     }
 }
