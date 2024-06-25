@@ -1,6 +1,6 @@
-package com.springboot.board.springboot_board.domain.member.entity;
+package com.springboot.board.springboot_board.domain.member.domain;
 
-import com.springboot.board.springboot_board.domain.Role;
+import com.springboot.board.springboot_board.domain.common.Role;
 import com.springboot.board.springboot_board.domain.common.BaseTime;
 import jakarta.persistence.*;
 import lombok.AccessLevel;

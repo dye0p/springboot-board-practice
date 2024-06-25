@@ -1,4 +1,4 @@
-package com.springboot.board.springboot_board.domain;
+package com.springboot.board.springboot_board.domain.common;
 
 import lombok.Getter;
 
