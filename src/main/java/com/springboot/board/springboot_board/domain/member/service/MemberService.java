@@ -7,6 +7,7 @@ import com.springboot.board.springboot_board.domain.member.repository.MemberRepo
 import com.springboot.board.springboot_board.global.exception.CustomException;
 import com.springboot.board.springboot_board.global.exception.errorcode.MemberErrorCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,13 +16,17 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
+    //이메일 중복 체크
     @Transactional(readOnly = true)
+
     public void checkEmailDuplicate(String email) {
         if (memberRepository.existsByEmail(email))
             throw new CustomException(MemberErrorCode.EMAIL_DUPLICATION);
     }
 
+    //아이디 중복 체크
     @Transactional(readOnly = true)
     public void checkLonginIdDuplicate(String loginId) {
         if (memberRepository.existsByLoginId(loginId))
@@ -30,13 +35,17 @@ public class MemberService {
 
     @Transactional
     public MemberSaveResponse join(MemberSaveRequest memberSaveRequest) {
-        Member member = memberRepository.save(memberSaveRequest.toEntity());
+        Member member = memberSaveRequest.toEntity();
+        member.encodePassword(passwordEncoder);
+        memberRepository.save(member);
 
         return new MemberSaveResponse(
                 member.getId(),
                 member.getNickname(),
                 member.getEmail(),
-                member.getRole()
+                member.getRole().getValue()
         );
     }
+
+
 }
