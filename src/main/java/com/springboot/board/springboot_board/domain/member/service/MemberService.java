@@ -1,6 +1,8 @@
 package com.springboot.board.springboot_board.domain.member.service;
 
 import com.springboot.board.springboot_board.domain.member.domain.Member;
+import com.springboot.board.springboot_board.domain.member.dto.MemberLoginRequest;
+import com.springboot.board.springboot_board.domain.member.dto.MemberLoginResponse;
 import com.springboot.board.springboot_board.domain.member.dto.MemberSaveRequest;
 import com.springboot.board.springboot_board.domain.member.dto.MemberSaveResponse;
 import com.springboot.board.springboot_board.domain.member.repository.MemberRepository;
@@ -47,5 +49,17 @@ public class MemberService {
         );
     }
 
+    @Transactional(readOnly = true)
+    public MemberLoginResponse login(MemberLoginRequest memberLoginRequest) {
+        Member member = memberRepository.findByLoginId(memberLoginRequest.loginId())
+                .orElseThrow(() -> new CustomException(MemberErrorCode.INVALID_CREDENTIALS));
 
+        if (!member.ischeckPassword(memberLoginRequest.password(), passwordEncoder)) {
+            throw new CustomException(MemberErrorCode.INVALID_CREDENTIALS);
+        }
+        return new MemberLoginResponse(
+                member.getNickname(),
+                member.getRole().getValue()
+        );
+    }
 }
