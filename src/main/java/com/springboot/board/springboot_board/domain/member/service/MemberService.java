@@ -41,12 +41,7 @@ public class MemberService {
         member.encodePassword(passwordEncoder);
         memberRepository.save(member);
 
-        return new MemberSaveResponse(
-                member.getId(),
-                member.getNickname(),
-                member.getEmail(),
-                member.getRole().getValue()
-        );
+        return MemberSaveResponse.ofMember(member);
     }
 
     @Transactional(readOnly = true)
@@ -57,9 +52,6 @@ public class MemberService {
         if (!member.ischeckPassword(memberLoginRequest.password(), passwordEncoder)) {
             throw new CustomException(MemberErrorCode.INVALID_CREDENTIALS);
         }
-        return new MemberLoginResponse(
-                member.getNickname(),
-                member.getRole().getValue()
-        );
+        return MemberLoginResponse.ofMember(member);
     }
 }
