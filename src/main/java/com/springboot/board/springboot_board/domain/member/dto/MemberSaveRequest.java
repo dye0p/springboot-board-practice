@@ -4,9 +4,7 @@ import com.springboot.board.springboot_board.domain.common.Role;
 import com.springboot.board.springboot_board.domain.member.domain.Member;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import lombok.Builder;
 
-@Builder
 public record MemberSaveRequest(
 
         @NotBlank(message = "아이디는 필수 입력 값입니다.")
