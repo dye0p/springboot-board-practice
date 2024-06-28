@@ -8,14 +8,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class CreateMailForm {
 
-    private static final String DEFAULT_TITLE = "이메일 인증 코드 입니다";
+    private static final String DEFAULT_TITLE = "이메일 인증을 위한 인증코드";
     private static final String DEFAULT_MESSAGE = "이메일 인증 코드 입니다: ";
     private final AuthCodeGenerator authCodeGenerator;
 
     public SimpleMailMessage createMailMessaget(String toEmail) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
+        String authCode = authCodeGenerator.generateAndSaveAuthCode(toEmail);
 
-        String authCode = authCodeGenerator.generateAuthCode();
         mailMessage.setTo(toEmail);
         mailMessage.setSubject(DEFAULT_TITLE);
         mailMessage.setText(DEFAULT_MESSAGE + authCode);

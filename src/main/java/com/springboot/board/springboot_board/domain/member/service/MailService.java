@@ -15,7 +15,6 @@ public class MailService {
     private final CreateMailForm createMailForm;
 
     public void sendMail(MailSendRequest mailSendRequest) {
-
         SimpleMailMessage mailMessage = createMailForm.createMailMessaget(mailSendRequest.email());
         mailSender.send(mailMessage);
     }
