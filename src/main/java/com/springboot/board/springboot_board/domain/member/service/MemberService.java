@@ -8,6 +8,7 @@ import com.springboot.board.springboot_board.domain.member.dto.MemberSaveRespons
 import com.springboot.board.springboot_board.domain.member.dto.mail.MailSendRequest;
 import com.springboot.board.springboot_board.domain.member.repository.MemberRepository;
 import com.springboot.board.springboot_board.global.exception.CustomException;
+import com.springboot.board.springboot_board.global.exception.errorcode.MailErrorCode;
 import com.springboot.board.springboot_board.global.exception.errorcode.MemberErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -60,6 +61,9 @@ public class MemberService {
 
     @Transactional
     public void sendAuthCodeToEmail(MailSendRequest mailSendRequest) {
+        if (memberRepository.existsByEmail(mailSendRequest.email()))
+            throw new CustomException(MailErrorCode.EMAIL_DUPLICATED);
+
         mailService.sendMail(mailSendRequest);
     }
 }
