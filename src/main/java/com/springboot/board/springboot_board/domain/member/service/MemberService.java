@@ -5,6 +5,7 @@ import com.springboot.board.springboot_board.domain.member.dto.MemberLoginReques
 import com.springboot.board.springboot_board.domain.member.dto.MemberLoginResponse;
 import com.springboot.board.springboot_board.domain.member.dto.MemberSaveRequest;
 import com.springboot.board.springboot_board.domain.member.dto.MemberSaveResponse;
+import com.springboot.board.springboot_board.domain.member.dto.mail.MailSendRequest;
 import com.springboot.board.springboot_board.domain.member.repository.MemberRepository;
 import com.springboot.board.springboot_board.global.exception.CustomException;
 import com.springboot.board.springboot_board.global.exception.errorcode.MemberErrorCode;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final MailService mailService;
     private final PasswordEncoder passwordEncoder;
 
     //이메일 중복 체크
@@ -52,6 +54,12 @@ public class MemberService {
         if (!member.ischeckPassword(memberLoginRequest.password(), passwordEncoder)) {
             throw new CustomException(MemberErrorCode.INVALID_CREDENTIALS);
         }
+
         return MemberLoginResponse.ofMember(member);
+    }
+
+    @Transactional
+    public void sendAuthCodeToEmail(MailSendRequest mailSendRequest) {
+        mailService.sendMail(mailSendRequest);
     }
 }

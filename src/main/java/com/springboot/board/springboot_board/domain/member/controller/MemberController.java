@@ -4,6 +4,7 @@ import com.springboot.board.springboot_board.domain.member.dto.MemberLoginReques
 import com.springboot.board.springboot_board.domain.member.dto.MemberLoginResponse;
 import com.springboot.board.springboot_board.domain.member.dto.MemberSaveRequest;
 import com.springboot.board.springboot_board.domain.member.dto.MemberSaveResponse;
+import com.springboot.board.springboot_board.domain.member.dto.mail.MailSendRequest;
 import com.springboot.board.springboot_board.domain.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -39,5 +40,12 @@ public class MemberController {
     public ResponseEntity<String> checkLoginIdDuplicate(@RequestParam String loginId) {
         memberService.checkLonginIdDuplicate(loginId);
         return ResponseEntity.ok().body("이 아이디는 사용가능 아이디 입니다");
+    }
+
+    @PostMapping("/v1/send-auth-code")
+    public ResponseEntity<Void> sendEmail(@RequestBody @Valid MailSendRequest mailSendRequest) {
+        memberService.sendAuthCodeToEmail(mailSendRequest);
+
+        return ResponseEntity.ok().build();
     }
 }
