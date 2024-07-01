@@ -1,4 +1,4 @@
-package com.springboot.board.springboot_board.domain.member.config;
+package com.springboot.board.springboot_board.global.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
