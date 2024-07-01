@@ -5,10 +5,8 @@ import com.springboot.board.springboot_board.domain.member.dto.MemberLoginReques
 import com.springboot.board.springboot_board.domain.member.dto.MemberLoginResponse;
 import com.springboot.board.springboot_board.domain.member.dto.MemberSaveRequest;
 import com.springboot.board.springboot_board.domain.member.dto.MemberSaveResponse;
-import com.springboot.board.springboot_board.domain.member.dto.mail.MailSendRequest;
 import com.springboot.board.springboot_board.domain.member.repository.MemberRepository;
 import com.springboot.board.springboot_board.global.exception.CustomException;
-import com.springboot.board.springboot_board.global.exception.errorcode.MailErrorCode;
 import com.springboot.board.springboot_board.global.exception.errorcode.MemberErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,18 +18,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    private final MailService mailService;
     private final PasswordEncoder passwordEncoder;
 
-    //이메일 중복 체크
     @Transactional(readOnly = true)
-
     public void checkEmailDuplicate(String email) {
         if (memberRepository.existsByEmail(email))
             throw new CustomException(MemberErrorCode.EMAIL_DUPLICATION);
     }
 
-    //아이디 중복 체크
     @Transactional(readOnly = true)
     public void checkLonginIdDuplicate(String loginId) {
         if (memberRepository.existsByLoginId(loginId))
@@ -57,13 +51,5 @@ public class MemberService {
         }
 
         return MemberLoginResponse.ofMember(member);
-    }
-
-    @Transactional
-    public void sendAuthCodeToEmail(MailSendRequest mailSendRequest) {
-        if (memberRepository.existsByEmail(mailSendRequest.email()))
-            throw new CustomException(MailErrorCode.EMAIL_DUPLICATED);
-
-        mailService.sendMail(mailSendRequest);
     }
 }
