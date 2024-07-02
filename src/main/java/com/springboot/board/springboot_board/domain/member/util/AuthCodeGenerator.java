@@ -1,5 +1,6 @@
 package com.springboot.board.springboot_board.domain.member.util;
 
+import com.springboot.board.springboot_board.global.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -16,10 +17,8 @@ public class AuthCodeGenerator {
     private static final int CODE_LENGTH = 8;
     private static final long AUTH_CODE_EXPIRE_DURATION = 5 * 60 * 1000; // 5분 (밀리초)
 
-    public String generateAndSaveAuthCode(String email) {
-        String authCode = generateAuthCode();
-        redisUtil.setDataExpire(AUTH_CODE_PREFIX + email, authCode, AUTH_CODE_EXPIRE_DURATION);
-        return authCode;
+    public void saveAuthCode(String email, String authCode) {
+        redisUtil.saveData(AUTH_CODE_PREFIX + email,authCode, AUTH_CODE_EXPIRE_DURATION);
     }
 
     public String generateAuthCode() {
@@ -32,4 +31,14 @@ public class AuthCodeGenerator {
         }
         return code.toString();
     }
+
+    public boolean verifyAuthCode(String email, String authCode) {
+        String storedAuthCode = redisUtil.getData(AUTH_CODE_PREFIX + email);
+        if (storedAuthCode != null && storedAuthCode.equals(authCode)) {
+            redisUtil.deleteData(AUTH_CODE_PREFIX + email); // 인증이 성공하면 Redis에서 삭제
+            return true;
+        }
+        return false;
+    }
 }
+

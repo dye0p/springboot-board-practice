@@ -15,7 +15,8 @@ public class CreateMailForm {
     public SimpleMailMessage createMailMessaget(String toEmail) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
 
-        String authCode = authCodeGenerator.generateAndSaveAuthCode(toEmail);
+        String authCode = authCodeGenerator.generateAuthCode();
+        authCodeGenerator.saveAuthCode(toEmail, authCode);
 
         mailMessage.setTo(toEmail);
         mailMessage.setSubject(DEFAULT_TITLE);

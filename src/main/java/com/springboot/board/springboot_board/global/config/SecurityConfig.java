@@ -33,7 +33,7 @@ public class SecurityConfig {
                                         "/", "/h2-console/**",
                                         "/api/v1/join", "/api/v1/login",
                                         "/api/v1/check-email", "/api/v1/check-loginid",
-                                        "/api/v1/auth/**"
+                                        "/api/v1/auth/auth-code"
                                 ).permitAll()
                                 .anyRequest().authenticated());
 

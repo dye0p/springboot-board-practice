@@ -14,11 +14,10 @@ public class MailAuthCodeService {
 
     private final AuthCodeGenerator authCodeGenerator;
 
-    @Transactional
-    public boolean verifyAuthCode(MailVerifyRequest mailVerifyRequest) {
+    @Transactional(readOnly = true)
+    public void verifyAuthCode(MailVerifyRequest mailVerifyRequest) {
         if (!authCodeGenerator.verifyAuthCode(mailVerifyRequest.email(), mailVerifyRequest.verifyCode())) {
             throw new CustomException(MailErrorCode.INVALID_VERIFICATION_CODE);
         }
-        return true;
     }
 }
