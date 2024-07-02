@@ -17,13 +17,13 @@ public class MailAuthController {
     private final MailService mailService;
     private final MailAuthCodeService mailAuthCodeService;
 
-    @PostMapping("/v1/auth/auth-code")
+    @PostMapping("/v2/auth/auth-code")
     public ResponseEntity<Void> sendEmail(@RequestBody @Valid MailSendRequest mailSendRequest) {
         mailService.sendMail(mailSendRequest);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/v1/auth/auth-code")
+    @GetMapping("/v2/auth/auth-code")
     public ResponseEntity<Void> verifyEmail(@RequestBody @Valid MailVerifyRequest mailVerifyRequest) {
         mailAuthCodeService.verifyAuthCode(mailVerifyRequest);
         return ResponseEntity.ok().build();
