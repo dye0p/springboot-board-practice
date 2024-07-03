@@ -1,11 +1,10 @@
 package com.springboot.board.springboot_board.domain.member.service;
 
 import com.springboot.board.springboot_board.domain.member.dto.mail.MailSendRequest;
-import com.springboot.board.springboot_board.domain.member.util.CreateMailForm;
+import com.springboot.board.springboot_board.domain.member.repository.MemberRepository;
+import com.springboot.board.springboot_board.global.exception.CustomException;
+import com.springboot.board.springboot_board.global.exception.errorcode.MailErrorCode;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,14 +12,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MailService {
 
-    private final JavaMailSender mailSender;
-    private final CreateMailForm createMailForm;
+    private final EmailSender emailSender;
+    private final MemberRepository memberRepository;
 
-    @Async("mailExecutor")
     @Transactional
-    public void sendMail(MailSendRequest mailSendRequest) {
-        SimpleMailMessage mailMessage = createMailForm.createMailMessaget(mailSendRequest.email());
-        mailSender.send(mailMessage);
+    public void checkAndSendEmail(MailSendRequest mailSendRequest) {
+        if (memberRepository.existsByEmail(mailSendRequest.email())) {
+            throw new CustomException(MailErrorCode.EMAIL_DUPLICATED);
+        }
+        emailSender.sendMail(emailSender.createMailMessage(mailSendRequest.email()));
     }
-}
 
+
+}

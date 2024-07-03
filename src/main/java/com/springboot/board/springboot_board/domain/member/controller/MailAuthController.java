@@ -19,7 +19,7 @@ public class MailAuthController {
 
     @PostMapping("/v2/auth/auth-code")
     public ResponseEntity<Void> sendEmail(@RequestBody @Valid MailSendRequest mailSendRequest) {
-        mailService.sendMail(mailSendRequest);
+        mailService.checkAndSendEmail(mailSendRequest);
         return ResponseEntity.ok().build();
     }
 
