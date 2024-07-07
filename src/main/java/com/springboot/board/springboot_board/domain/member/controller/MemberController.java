@@ -1,7 +1,5 @@
 package com.springboot.board.springboot_board.domain.member.controller;
 
-import com.springboot.board.springboot_board.domain.member.dto.MemberLoginRequest;
-import com.springboot.board.springboot_board.domain.member.dto.MemberLoginResponse;
 import com.springboot.board.springboot_board.domain.member.dto.MemberSaveRequest;
 import com.springboot.board.springboot_board.domain.member.dto.MemberSaveResponse;
 import com.springboot.board.springboot_board.domain.member.service.MemberService;
@@ -20,12 +18,6 @@ public class MemberController {
     @PostMapping("/v1/join")
     public ResponseEntity<MemberSaveResponse> joinMember(@RequestBody @Valid MemberSaveRequest memberSaveRequest) {
         MemberSaveResponse member = memberService.join(memberSaveRequest);
-        return ResponseEntity.ok(member);
-    }
-
-    @PostMapping("/v1/login")
-    public ResponseEntity<MemberLoginResponse> loginMember(@RequestBody @Valid MemberLoginRequest memberLoginRequest) {
-        MemberLoginResponse member = memberService.login(memberLoginRequest);
         return ResponseEntity.ok(member);
     }
 
