@@ -2,6 +2,7 @@ package com.springboot.board.springboot_board.global.config;
 
 import com.springboot.board.springboot_board.global.auth.jwt.JwtFilter;
 import com.springboot.board.springboot_board.global.auth.jwt.TokenProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,15 +18,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private TokenProvider tokenProvider;
-
-    public SecurityConfig(TokenProvider tokenProvider) {
-        this.tokenProvider = tokenProvider;
-    }
+    private final TokenProvider tokenProvider;
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
