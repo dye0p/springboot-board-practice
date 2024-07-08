@@ -23,7 +23,8 @@ public class JwtFilter extends OncePerRequestFilter {
     private final TokenProvider tokenProvider;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
         String authorization = request.getHeader("Authorization");
 
         if (authorization == null || !authorization.startsWith("Bearer ")) {
@@ -32,7 +33,6 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        System.out.println("authorization now");
         String token = authorization.split(" ")[1];
 
         if (tokenProvider.isExpired(token)) {
@@ -40,8 +40,9 @@ public class JwtFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
+
         String loginId = tokenProvider.getLogidId(token);
-        Role role = Role.valueOf(tokenProvider.getRole(token));
+        Role role = Role.fromValue(tokenProvider.getRole(token));
 
         Member member = Member.builder()
                 .loginId(loginId)
@@ -49,7 +50,6 @@ public class JwtFilter extends OncePerRequestFilter {
                 .build();
 
         CustomUserDetails memberDetails = new CustomUserDetails(member);
-
         Authentication authToken = new UsernamePasswordAuthenticationToken(memberDetails, null,
                 memberDetails.getAuthorities());
 
