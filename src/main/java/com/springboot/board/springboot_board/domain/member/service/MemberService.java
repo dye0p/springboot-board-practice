@@ -6,6 +6,7 @@ import com.springboot.board.springboot_board.domain.member.dto.MemberSaveRequest
 import com.springboot.board.springboot_board.domain.member.dto.MemberSaveResponse;
 import com.springboot.board.springboot_board.domain.member.repository.MemberRepository;
 import com.springboot.board.springboot_board.global.auth.jwt.TokenProvider;
+import com.springboot.board.springboot_board.global.auth.jwt.dto.JwtResponse;
 import com.springboot.board.springboot_board.global.exception.CustomException;
 import com.springboot.board.springboot_board.global.exception.errorcode.MemberErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +48,7 @@ public class MemberService {
     }
 
     @Transactional
-    public String login(MemberLoginRequest memberLoginRequest) {
+    public JwtResponse login(MemberLoginRequest memberLoginRequest) {
 
         Member member = memberRepository.findByLoginId(memberLoginRequest.loginId())
                 .orElseThrow(() -> new CustomException(MemberErrorCode.INVALID_CREDENTIALS));
@@ -55,7 +56,8 @@ public class MemberService {
         if (!member.ischeckPassword(memberLoginRequest.password(), passwordEncoder)) {
             throw new CustomException(MemberErrorCode.INVALID_CREDENTIALS);
         }
+        String accessToken = tokenProvider.createJwt(memberLoginRequest.loginId(), member.getRole().getValue(), expiredTime);
 
-        return tokenProvider.createJwt(memberLoginRequest.loginId(), member.getRole().getValue(), expiredTime);
+        return new JwtResponse(accessToken);
     }
 }
