@@ -5,12 +5,11 @@ import com.springboot.board.springboot_board.domain.member.dto.MemberLoginReques
 import com.springboot.board.springboot_board.domain.member.dto.MemberSaveRequest;
 import com.springboot.board.springboot_board.domain.member.dto.MemberSaveResponse;
 import com.springboot.board.springboot_board.domain.member.repository.MemberRepository;
-import com.springboot.board.springboot_board.global.auth.jwt.TokenProvider;
-import com.springboot.board.springboot_board.global.auth.jwt.dto.JwtResponse;
+import com.springboot.board.springboot_board.global.auth.jwt.TokenManager;
+import com.springboot.board.springboot_board.global.auth.jwt.dto.Tokens;
 import com.springboot.board.springboot_board.global.exception.CustomException;
 import com.springboot.board.springboot_board.global.exception.errorcode.MemberErrorCode;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,10 +20,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
-    private final TokenProvider tokenProvider;
-
-    @Value("${jwt.token-validity-in-seconds}")
-    private Long expiredTime;
+    private final TokenManager tokenManager;
 
     @Transactional(readOnly = true)
     public void checkEmailDuplicate(String email) {
@@ -48,7 +44,7 @@ public class MemberService {
     }
 
     @Transactional
-    public JwtResponse login(MemberLoginRequest memberLoginRequest) {
+    public Tokens login(MemberLoginRequest memberLoginRequest) {
 
         Member member = memberRepository.findByLoginId(memberLoginRequest.loginId())
                 .orElseThrow(() -> new CustomException(MemberErrorCode.INVALID_CREDENTIALS));
@@ -56,8 +52,7 @@ public class MemberService {
         if (!member.ischeckPassword(memberLoginRequest.password(), passwordEncoder)) {
             throw new CustomException(MemberErrorCode.INVALID_CREDENTIALS);
         }
-        String accessToken = tokenProvider.createJwt(memberLoginRequest.loginId(), member.getRole().getValue(), expiredTime);
-
-        return new JwtResponse(accessToken);
+        return tokenManager.issueToken(member);
     }
 }
+

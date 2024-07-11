@@ -1,52 +1,55 @@
 package com.springboot.board.springboot_board.global.auth.jwt;
 
 
+import com.springboot.board.springboot_board.global.auth.jwt.dto.Tokens;
+import com.springboot.board.springboot_board.global.auth.jwt.dto.TokenPayload;
+import com.springboot.board.springboot_board.global.properties.JwtProperties;
 import io.jsonwebtoken.Jwts;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
+@RequiredArgsConstructor
 @Component
 public class TokenProvider {
     private static final String MEMBER_ID = "memberId";
     private static final String ROLE = "role";
 
-    private SecretKey secretKey;
+    private final JwtProperties jwtProperties;
 
-    public TokenProvider(@Value("${jwt.secret}") String secret) {
-        secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8),
-                Jwts.SIG.HS256.key().build().getAlgorithm());
+    public Tokens creatTokens(TokenPayload tokenPayload) {
+        return Tokens.of(
+                createToken(tokenPayload.memberId(), tokenPayload.role(), jwtProperties.getAccessExpirationTime()),
+                createToken(tokenPayload.memberId(), tokenPayload.role(), jwtProperties.getRefreshExpirationTime())
+        );
     }
 
-    public String createJwt(String memberId, String role, Long expiredMs) {
+    private String createToken(String memberId, String role, Long expirationTime) {
         Date now = new Date();
-        Date expired = new Date(now.getTime() + expiredMs);
+        Date expired = new Date(now.getTime() + expirationTime);
 
         return Jwts.builder()
                 .claim(MEMBER_ID, memberId)
                 .claim(ROLE, role)
                 .issuedAt(now)
                 .expiration(expired)
-                .signWith(secretKey)
+                .signWith(jwtProperties.getSecretKey())
                 .compact();
     }
 
     public String getLogidId(String token) {
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get(MEMBER_ID,
+        return Jwts.parser().verifyWith(jwtProperties.getSecretKey()).build().parseSignedClaims(token).getPayload().get(MEMBER_ID,
                 String.class);
     }
 
     public String getRole(String token) {
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get(ROLE,
+        return Jwts.parser().verifyWith(jwtProperties.getSecretKey()).build().parseSignedClaims(token).getPayload().get(ROLE,
                 String.class);
     }
 
-    public Boolean isExpired(String token) {
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration()
+    public boolean isExpired(String token) {
+        return Jwts.parser().verifyWith(jwtProperties.getSecretKey()).build().parseSignedClaims(token).getPayload().getExpiration()
                 .before(new Date());
     }
 

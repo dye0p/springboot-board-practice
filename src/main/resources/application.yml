@@ -20,8 +20,9 @@ server:
   port: 8080
 
 jwt:
-  secret: ${JWT_SECRET}
-  token-validity-in-seconds: 3600000  # 1시간
+  secretKey: ${JWT_SECRET}
+  access-expiration-time: 1800000 #30분
+  refresh-expiration-time: 86400000 # 24시간
 ---
 spring:
   config:
