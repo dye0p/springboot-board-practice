@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((auth) ->
                         auth.requestMatchers(
                                         "/",
-                                        "/api/v1/join", "/api/v1/login",
+                                        "/api/v1/join", "/api/v2/login",
                                         "/api/v1/check-email", "/api/v1/check-loginid",
                                         "/api/v2/auth/auth-code"
                                 ).permitAll()
