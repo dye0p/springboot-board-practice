@@ -39,7 +39,7 @@ public class Member extends BaseTime {
     private Role role;
 
     @Builder
-    public Member(Long id, String loginId, String nickname, String email, String password, String phone, Role role) {
+    private Member(Long id, String loginId, String nickname, String email, String password, String phone, Role role) {
         this.email = email;
         this.id = id;
         this.loginId = loginId;
@@ -49,6 +49,12 @@ public class Member extends BaseTime {
         this.role = role;
     }
 
+    public static Member fromId(Long id) {
+       return Member.builder()
+                .id(id)
+                .build();
+    }
+
     public void encodePassword(PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(password);
     }
@@ -56,5 +62,4 @@ public class Member extends BaseTime {
     public boolean ischeckPassword(String rawPassword, PasswordEncoder passwordEncoder) {
         return passwordEncoder.matches(rawPassword, password);
     }
-
 }

@@ -1,4 +1,4 @@
-package com.springboot.board.springboot_board.global.auth.jwt.dto;
+package com.springboot.board.springboot_board.domain.jwt.dto;
 
 public record TokenPayload(
         String memberId,
