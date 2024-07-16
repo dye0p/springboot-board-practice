@@ -2,6 +2,7 @@ package com.springboot.board.springboot_board.domain.member.domain;
 
 import com.springboot.board.springboot_board.domain.common.BaseTime;
 import com.springboot.board.springboot_board.domain.common.Role;
+import com.springboot.board.springboot_board.domain.jwt.dto.TokenPayload;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -61,5 +62,9 @@ public class Member extends BaseTime {
 
     public boolean ischeckPassword(String rawPassword, PasswordEncoder passwordEncoder) {
         return passwordEncoder.matches(rawPassword, password);
+    }
+
+    public TokenPayload tokenPayload() {
+        return new TokenPayload(this.loginId, this.role.getValue());
     }
 }
