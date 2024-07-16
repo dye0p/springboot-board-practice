@@ -20,18 +20,29 @@ public class TokenProvider {
 
     public Tokens creatTokens(TokenPayload tokenPayload) {
         return Tokens.of(
-                createToken(tokenPayload.memberId(), tokenPayload.role(), jwtProperties.getAccessExpirationTime()),
-                createToken(tokenPayload.memberId(), tokenPayload.role(), jwtProperties.getRefreshExpirationTime())
+                createAccessToken(tokenPayload.memberId(), tokenPayload.role(), jwtProperties.getAccessExpirationTime()),
+                createRefreshToken(jwtProperties.getRefreshExpirationTime())
         );
     }
 
-    private String createToken(String memberId, String role, Long expirationTime) {
+    private String createAccessToken(String memberId, String role, Long expirationTime) {
         Date now = new Date();
         Date expired = new Date(now.getTime() + expirationTime);
 
         return Jwts.builder()
                 .claim(MEMBER_ID, memberId)
                 .claim(ROLE, role)
+                .issuedAt(now)
+                .expiration(expired)
+                .signWith(jwtProperties.getSecretKey())
+                .compact();
+    }
+
+    private String createRefreshToken(Long expirationTime) {
+        Date now = new Date();
+        Date expired = new Date(now.getTime() + expirationTime);
+
+        return Jwts.builder()
                 .issuedAt(now)
                 .expiration(expired)
                 .signWith(jwtProperties.getSecretKey())
