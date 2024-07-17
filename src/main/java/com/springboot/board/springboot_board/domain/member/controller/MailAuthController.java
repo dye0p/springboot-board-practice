@@ -1,5 +1,6 @@
 package com.springboot.board.springboot_board.domain.member.controller;
 
+import com.springboot.board.springboot_board.domain.common.response.ApiResponse;
 import com.springboot.board.springboot_board.domain.member.dto.mail.MailSendRequest;
 import com.springboot.board.springboot_board.domain.member.dto.mail.MailVerifyRequest;
 import com.springboot.board.springboot_board.domain.member.service.MailAuthCodeService;
@@ -18,14 +19,14 @@ public class MailAuthController {
     private final MailAuthCodeService mailAuthCodeService;
 
     @PostMapping("/v2/auth/auth-code")
-    public ResponseEntity<Void> sendEmail(@RequestBody @Valid MailSendRequest mailSendRequest) {
+    public ResponseEntity<ApiResponse<Void>> sendEmail(@RequestBody @Valid MailSendRequest mailSendRequest) {
         mailService.checkAndSendEmail(mailSendRequest);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.ok());
     }
 
     @GetMapping("/v2/auth/auth-code")
-    public ResponseEntity<Void> verifyEmail(@RequestBody @Valid MailVerifyRequest mailVerifyRequest) {
+    public ResponseEntity<ApiResponse<Void>> verifyEmail(@RequestBody @Valid MailVerifyRequest mailVerifyRequest) {
         mailAuthCodeService.verifyAuthCode(mailVerifyRequest);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.ok());
     }
 }

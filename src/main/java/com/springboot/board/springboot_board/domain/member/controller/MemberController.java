@@ -1,10 +1,12 @@
 package com.springboot.board.springboot_board.domain.member.controller;
 
+import com.springboot.board.springboot_board.domain.common.response.ApiResponse;
 import com.springboot.board.springboot_board.domain.member.dto.MemberSaveRequest;
 import com.springboot.board.springboot_board.domain.member.dto.MemberSaveResponse;
 import com.springboot.board.springboot_board.domain.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,20 +18,21 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/v1/join")
-    public ResponseEntity<MemberSaveResponse> joinMember(@RequestBody @Valid MemberSaveRequest memberSaveRequest) {
+    public ResponseEntity<ApiResponse<MemberSaveResponse>> joinMember(@RequestBody @Valid MemberSaveRequest memberSaveRequest) {
         MemberSaveResponse member = memberService.join(memberSaveRequest);
-        return ResponseEntity.ok(member);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.success(member));
     }
 
     @GetMapping("/v1/check-email")
-    public ResponseEntity<String> checkEmailDuplicate(@RequestParam String email) {
+    public ResponseEntity<ApiResponse<String>> checkEmailDuplicate(@RequestParam String email) {
         memberService.checkEmailDuplicate(email);
-        return ResponseEntity.ok().body("이 이메일은 사용가능 이메일 입니다");
+        return ResponseEntity.ok(ApiResponse.ok("이 이메일은 사용가능 이메일 입니다"));
     }
 
     @GetMapping("/v1/check-loginid")
-    public ResponseEntity<String> checkLoginIdDuplicate(@RequestParam String loginId) {
+    public ResponseEntity<ApiResponse<String>> checkLoginIdDuplicate(@RequestParam String loginId) {
         memberService.checkLonginIdDuplicate(loginId);
-        return ResponseEntity.ok().body("이 아이디는 사용가능 아이디 입니다");
+        return ResponseEntity.ok(ApiResponse.ok("이 아이디는 사용가능 아이디 입니다"));
     }
 }
