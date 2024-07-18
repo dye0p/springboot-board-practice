@@ -50,12 +50,6 @@ public class Member extends BaseTime {
         this.role = role;
     }
 
-    public static Member fromId(Long id) {
-       return Member.builder()
-                .id(id)
-                .build();
-    }
-
     public void encodePassword(PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(password);
     }

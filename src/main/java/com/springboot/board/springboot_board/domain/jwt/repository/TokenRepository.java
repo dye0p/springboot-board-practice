@@ -1,14 +1,7 @@
 package com.springboot.board.springboot_board.domain.jwt.repository;
 
 import com.springboot.board.springboot_board.domain.jwt.domain.Token;
-import com.springboot.board.springboot_board.domain.member.domain.Member;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
-import java.util.Optional;
-
-public interface TokenRepository extends JpaRepository<Token, Long> {
-
-    boolean existsByRefreshToken(String token);
-
-    Optional<Token> findByMember(Member member);
+public interface TokenRepository extends CrudRepository<Token, String> {
 }

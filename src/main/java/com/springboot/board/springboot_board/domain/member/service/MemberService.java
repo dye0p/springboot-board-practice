@@ -51,7 +51,7 @@ public class MemberService {
         if (!member.ischeckPassword(memberLoginRequest.password(), passwordEncoder)) {
             throw new CustomException(MemberErrorCode.INVALID_CREDENTIALS);
         }
-        return tokenService.registrarOrUpdateToken(member);
+        return tokenService.saveToken(member);
     }
 }
 
