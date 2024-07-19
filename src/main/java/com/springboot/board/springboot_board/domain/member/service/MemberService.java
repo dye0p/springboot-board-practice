@@ -53,5 +53,9 @@ public class MemberService {
         }
         return tokenService.saveToken(member);
     }
+
+    public void logout(String accessToken) {
+        tokenService.saveBlackList(accessToken);
+    }
 }
 

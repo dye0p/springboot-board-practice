@@ -1,8 +1,8 @@
 package com.springboot.board.springboot_board.global.auth.jwt;
 
 
-import com.springboot.board.springboot_board.domain.jwt.dto.Tokens;
 import com.springboot.board.springboot_board.domain.jwt.dto.TokenPayload;
+import com.springboot.board.springboot_board.domain.jwt.dto.Tokens;
 import com.springboot.board.springboot_board.global.properties.JwtProperties;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
@@ -64,4 +64,7 @@ public class TokenProvider {
                 .before(new Date());
     }
 
+    public Date getExpiryDate(String accessToken) {
+        return Jwts.parser().verifyWith(jwtProperties.getSecretKey()).build().parseSignedClaims(accessToken).getPayload().getExpiration();
+    }
 }
