@@ -1,6 +1,9 @@
 package com.springboot.board.springboot_board.domain.jwt.service;
 
-import com.springboot.board.springboot_board.domain.jwt.business.*;
+import com.springboot.board.springboot_board.domain.jwt.business.BlackListRegistrar;
+import com.springboot.board.springboot_board.domain.jwt.business.TokenExpirationManager;
+import com.springboot.board.springboot_board.domain.jwt.business.TokenManager;
+import com.springboot.board.springboot_board.domain.jwt.business.TokenRegistrar;
 import com.springboot.board.springboot_board.domain.jwt.dto.Tokens;
 import com.springboot.board.springboot_board.domain.member.domain.Member;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +26,6 @@ public class TokenService {
 
     public void saveBlackList(String accessToken) {
         Long expriration = tokenExpirationManager.getExpriration(accessToken);
-        blackListRegistrar.registrarBlackListToken(accessToken, expriration);
+        blackListRegistrar.registrarBlackListToken(accessToken, expriration / 1000);
     }
 }

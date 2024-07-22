@@ -64,7 +64,13 @@ public class TokenProvider {
                 .before(new Date());
     }
 
-    public Date getExpiryDate(String accessToken) {
-        return Jwts.parser().verifyWith(jwtProperties.getSecretKey()).build().parseSignedClaims(accessToken).getPayload().getExpiration();
+    public long getRemainingExpirationTime(String token) {
+        Date expiryDate = getExpiryDate(token);
+        long now = new Date().getTime();
+        return expiryDate.getTime() - now;
+    }
+
+    private Date getExpiryDate(String token) {
+        return Jwts.parser().verifyWith(jwtProperties.getSecretKey()).build().parseSignedClaims(token).getPayload().getExpiration();
     }
 }
