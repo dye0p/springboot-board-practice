@@ -22,13 +22,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    private static final String[] permitList = {"/", "/h2-console/**", "/api/v1/join", "/api/v2/login",
+            "/api/v1/check-email", "/api/v1/check-loginid", "/api/v2/auth/auth-code"};
 
     private final TokenProvider tokenProvider;
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
-                .requestMatchers("/h2-console/**");
+                .requestMatchers(permitList);
     }
 
     @Bean
@@ -41,14 +43,7 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth) ->
-                        auth.requestMatchers(
-                                        "/",
-                                        "/api/v1/join", "/api/v2/login",
-                                        "/api/v1/check-email", "/api/v1/check-loginid",
-                                        "/api/v2/auth/auth-code"
-                                ).permitAll()
-                                .anyRequest().authenticated());
-
+                        auth.anyRequest().authenticated());
 
         http
                 .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
