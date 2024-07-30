@@ -2,7 +2,7 @@ package com.springboot.board.springboot_board.domain.member.service;
 
 import com.springboot.board.springboot_board.domain.member.dto.mail.MailSendRequest;
 import com.springboot.board.springboot_board.domain.member.repository.MemberRepository;
-import com.springboot.board.springboot_board.global.exception.CustomException;
+import com.springboot.board.springboot_board.global.exception.custom.MailException;
 import com.springboot.board.springboot_board.global.exception.errorcode.MailErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,10 +18,8 @@ public class MailService {
     @Transactional
     public void checkAndSendEmail(MailSendRequest mailSendRequest) {
         if (memberRepository.existsByEmail(mailSendRequest.email())) {
-            throw new CustomException(MailErrorCode.EMAIL_DUPLICATED);
+            throw new MailException(MailErrorCode.EMAIL_DUPLICATED);
         }
         emailSender.sendMail(emailSender.createMailMessage(mailSendRequest.email()));
     }
-
-
 }

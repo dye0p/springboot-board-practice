@@ -1,6 +1,8 @@
 package com.springboot.board.springboot_board.global.exception;
 
 import com.springboot.board.springboot_board.domain.common.response.ApiResponse;
+import com.springboot.board.springboot_board.global.exception.custom.MailException;
+import com.springboot.board.springboot_board.global.exception.custom.MemberException;
 import com.springboot.board.springboot_board.global.exception.errorcode.ErrorCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +24,19 @@ public class GlobalExceptionHandler {
                 .body(ApiResponse.error(errorMessage));
     }
 
-    @ExceptionHandler(CustomException.class)
-    public ResponseEntity<ApiResponse<Object>> handleCustomException(CustomException e) {
+    @ExceptionHandler(MemberException.class)
+    public ResponseEntity<ApiResponse<Object>> handleCustomMemberException(CustomException e) {
         ErrorCode errorCode = e.getErrorCode();
 
         return ResponseEntity.status(errorCode.httpStatus())
-                .body(ApiResponse.error(e.getMessage()));
+                .body(ApiResponse.error(errorCode.message()));
+    }
+
+    @ExceptionHandler(MailException.class)
+    public ResponseEntity<ApiResponse<Object>> handleCustomMailException(CustomException e) {
+        ErrorCode errorCode = e.getErrorCode();
+
+        return ResponseEntity.status(errorCode.httpStatus())
+                .body(ApiResponse.error(errorCode.message()));
     }
 }

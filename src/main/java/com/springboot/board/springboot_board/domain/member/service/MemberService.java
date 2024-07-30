@@ -7,7 +7,7 @@ import com.springboot.board.springboot_board.domain.member.dto.MemberLoginReques
 import com.springboot.board.springboot_board.domain.member.dto.MemberSaveRequest;
 import com.springboot.board.springboot_board.domain.member.dto.MemberSaveResponse;
 import com.springboot.board.springboot_board.domain.member.repository.MemberRepository;
-import com.springboot.board.springboot_board.global.exception.CustomException;
+import com.springboot.board.springboot_board.global.exception.custom.MemberException;
 import com.springboot.board.springboot_board.global.exception.errorcode.MemberErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,13 +25,13 @@ public class MemberService {
     @Transactional(readOnly = true)
     public void checkEmailDuplicate(String email) {
         if (memberRepository.existsByEmail(email))
-            throw new CustomException(MemberErrorCode.EMAIL_DUPLICATION);
+            throw new MemberException(MemberErrorCode.EMAIL_DUPLICATION);
     }
 
     @Transactional(readOnly = true)
     public void checkLonginIdDuplicate(String loginId) {
         if (memberRepository.existsByLoginId(loginId))
-            throw new CustomException(MemberErrorCode.LOGINID_DUPLICATION);
+            throw new MemberException(MemberErrorCode.LOGINID_DUPLICATION);
     }
 
     @Transactional
@@ -46,10 +46,10 @@ public class MemberService {
     @Transactional
     public Tokens login(MemberLoginRequest memberLoginRequest) {
         Member member = memberRepository.findByLoginId(memberLoginRequest.loginId())
-                .orElseThrow(() -> new CustomException(MemberErrorCode.INVALID_CREDENTIALS));
+                .orElseThrow(() -> new MemberException(MemberErrorCode.INVALID_CREDENTIALS));
 
         if (!member.ischeckPassword(memberLoginRequest.password(), passwordEncoder)) {
-            throw new CustomException(MemberErrorCode.INVALID_CREDENTIALS);
+            throw new MemberException(MemberErrorCode.INVALID_CREDENTIALS);
         }
         return tokenService.saveToken(member);
     }
