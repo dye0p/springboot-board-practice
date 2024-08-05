@@ -48,14 +48,18 @@ public class MemberService {
         Member member = memberRepository.findByLoginId(memberLoginRequest.loginId())
                 .orElseThrow(() -> new MemberException(MemberErrorCode.INVALID_CREDENTIALS));
 
-        if (!member.ischeckPassword(memberLoginRequest.password(), passwordEncoder)) {
-            throw new MemberException(MemberErrorCode.INVALID_CREDENTIALS);
-        }
-        return tokenService.saveToken(member);
+        return getTokens(memberLoginRequest, member);
     }
 
     public void logout(String accessToken) {
         tokenService.saveBlackList(accessToken);
+    }
+
+    private Tokens getTokens(MemberLoginRequest memberLoginRequest, Member member) {
+        if (!member.ischeckPassword(memberLoginRequest.password(), passwordEncoder)) {
+            throw new MemberException(MemberErrorCode.INVALID_CREDENTIALS);
+        }
+        return tokenService.saveToken(member);
     }
 }
 

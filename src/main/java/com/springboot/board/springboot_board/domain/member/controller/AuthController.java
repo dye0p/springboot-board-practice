@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 @RestController
 public class AuthController {
-
+    private static final int INDEX = 7;
     private final MemberService memberService;
 
     @PostMapping("/v2/login")
@@ -24,8 +24,7 @@ public class AuthController {
 
     @GetMapping("/v1/logout")
     public ResponseEntity<ApiResponse<Void>> doLogout(@RequestHeader("accessToken") String accessToken) {
-        String token = accessToken.split(" ")[1].trim();
-//        System.out.println(token);
+        String token = accessToken.substring(INDEX);
         memberService.logout(token);
         return ResponseEntity.ok(ApiResponse.ok());
     }

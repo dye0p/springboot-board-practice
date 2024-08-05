@@ -12,14 +12,19 @@ import java.util.concurrent.Executor;
 @EnableAsync
 public class AsyncConfig implements AsyncConfigurer {
 
-    @Bean(name = "mailExecutor")
+    private static final String MAIL_EXECUTOR_BEAN_NAME = "mailExecutor";
+    private static final int CORE_POOL_SIZE = 2;
+    private static final int MAX_POOL_SIZE = 5;
+    private static final int QUEUE_CAPACITY = 10;
+
+    @Bean(name = MAIL_EXECUTOR_BEAN_NAME)
     @Override
     public Executor getAsyncExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(2);
-        executor.setMaxPoolSize(5);
-        executor.setQueueCapacity(10);
-        executor.setBeanName("mailExecutor");
+        executor.setCorePoolSize(CORE_POOL_SIZE);
+        executor.setMaxPoolSize(MAX_POOL_SIZE);
+        executor.setQueueCapacity(QUEUE_CAPACITY);
+        executor.setBeanName(MAIL_EXECUTOR_BEAN_NAME);
         executor.initialize();
         return executor;
     }
