@@ -1,7 +1,9 @@
-package com.springboot.board.springboot_board.global.config;
+package com.springboot.board.springboot_board.global.config.security;
 
-import com.springboot.board.springboot_board.global.auth.jwt.JwtFilter;
+import com.springboot.board.springboot_board.global.auth.jwt.filter.JwtAuthenticationFilter;
 import com.springboot.board.springboot_board.global.auth.jwt.TokenProvider;
+import com.springboot.board.springboot_board.global.auth.jwt.exception.JwtAuthenticationEntryPoint;
+import com.springboot.board.springboot_board.global.auth.jwt.filter.JwtExceptionFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +28,7 @@ public class SecurityConfig {
             "/api/v1/check-email", "/api/v1/check-loginid", "/api/v2/auth/auth-code"};
 
     private final TokenProvider tokenProvider;
+    private final JwtAuthenticationEntryPoint entryPoint;
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -46,9 +49,11 @@ public class SecurityConfig {
                         auth.anyRequest().authenticated());
 
         http
-                .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtExceptionFilter(), JwtAuthenticationFilter.class)
                 .sessionManagement((session) -> session.
-                        sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                        sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling(handler -> handler.authenticationEntryPoint(entryPoint));
 
         return http.build();
     }

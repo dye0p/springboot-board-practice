@@ -3,13 +3,21 @@ package com.springboot.board.springboot_board.global.auth.jwt;
 
 import com.springboot.board.springboot_board.domain.jwt.dto.TokenPayload;
 import com.springboot.board.springboot_board.domain.jwt.dto.Tokens;
+import com.springboot.board.springboot_board.global.exception.custom.JwtAuthenticationException;
+import com.springboot.board.springboot_board.global.exception.errorcode.TokenErrorCode;
 import com.springboot.board.springboot_board.global.properties.JwtProperties;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+@Slf4j
 @RequiredArgsConstructor
 @Component
 public class TokenProvider {
@@ -49,19 +57,34 @@ public class TokenProvider {
                 .compact();
     }
 
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parser().verifyWith(jwtProperties.getSecretKey())
+                    .build().parseSignedClaims(token);
+            return true;
+        } catch (SecurityException | SignatureException | MalformedJwtException e) {
+            log.info("Invalid JWT Token", e);
+            throw new JwtAuthenticationException(TokenErrorCode.AUTH_INVALID_TOKEN);
+        } catch (ExpiredJwtException e) {
+            log.info("Expired JWT Token", e);
+            throw new JwtAuthenticationException(TokenErrorCode.AUTH_TOKEN_HAS_EXPIRED);
+        } catch (UnsupportedJwtException e) {
+            log.info("Unsupported JWT Token", e);
+            throw new JwtAuthenticationException(TokenErrorCode.AUTH_TOKEN_IS_UNSUPPORTED);
+        } catch (IllegalArgumentException e) {
+            log.info("JWT claims string is empty.", e);
+            throw new JwtAuthenticationException(TokenErrorCode.AUTH_IS_NULL);
+        }
+    }
+
     public String getLogidId(String token) {
-        return Jwts.parser().verifyWith(jwtProperties.getSecretKey()).build().parseSignedClaims(token).getPayload().get(MEMBER_ID,
-                String.class);
+        return Jwts.parser().verifyWith(jwtProperties.getSecretKey())
+                .build().parseSignedClaims(token).getPayload().get(MEMBER_ID, String.class);
     }
 
     public String getRole(String token) {
-        return Jwts.parser().verifyWith(jwtProperties.getSecretKey()).build().parseSignedClaims(token).getPayload().get(ROLE,
-                String.class);
-    }
-
-    public boolean isExpired(String token) {
-        return Jwts.parser().verifyWith(jwtProperties.getSecretKey()).build().parseSignedClaims(token).getPayload().getExpiration()
-                .before(new Date());
+        return Jwts.parser().verifyWith(jwtProperties.getSecretKey())
+                .build().parseSignedClaims(token).getPayload().get(ROLE, String.class);
     }
 
     public long getRemainingExpirationTime(String token) {
@@ -71,6 +94,7 @@ public class TokenProvider {
     }
 
     private Date getExpiryDate(String token) {
-        return Jwts.parser().verifyWith(jwtProperties.getSecretKey()).build().parseSignedClaims(token).getPayload().getExpiration();
+        return Jwts.parser().verifyWith(jwtProperties.getSecretKey())
+                .build().parseSignedClaims(token).getPayload().getExpiration();
     }
 }
