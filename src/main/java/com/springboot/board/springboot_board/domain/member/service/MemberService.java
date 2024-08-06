@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
 public class MemberService {
@@ -22,13 +23,11 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
 
-    @Transactional(readOnly = true)
     public void checkEmailDuplicate(String email) {
         if (memberRepository.existsByEmail(email))
             throw new MemberException(MemberErrorCode.EMAIL_DUPLICATION);
     }
 
-    @Transactional(readOnly = true)
     public void checkLonginIdDuplicate(String loginId) {
         if (memberRepository.existsByLoginId(loginId))
             throw new MemberException(MemberErrorCode.LOGINID_DUPLICATION);
@@ -36,6 +35,9 @@ public class MemberService {
 
     @Transactional
     public MemberSaveResponse join(MemberSaveRequest memberSaveRequest) {
+        if(memberRepository.existsByLoginId(memberSaveRequest.loginId()))
+            throw new MemberException(MemberErrorCode.MEMBER_DUPLICATION);
+
         Member member = memberSaveRequest.toEntity();
         member.encodePassword(passwordEncoder);
         memberRepository.save(member);
