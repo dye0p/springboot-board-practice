@@ -1,13 +1,17 @@
 package com.springboot.board.springboot_board.domain.jwt.service;
 
-import com.springboot.board.springboot_board.domain.jwt.business.BlackListRegistrar;
-import com.springboot.board.springboot_board.domain.jwt.business.TokenExpirationManager;
-import com.springboot.board.springboot_board.domain.jwt.business.TokenManager;
-import com.springboot.board.springboot_board.domain.jwt.business.TokenRegistrar;
+import com.springboot.board.springboot_board.domain.jwt.business.*;
 import com.springboot.board.springboot_board.domain.jwt.dto.Tokens;
 import com.springboot.board.springboot_board.domain.member.domain.Member;
+import com.springboot.board.springboot_board.domain.member.dto.MemberLoginRequest;
+import com.springboot.board.springboot_board.domain.member.repository.MemberRepository;
+import com.springboot.board.springboot_board.global.exception.custom.MemberException;
+import com.springboot.board.springboot_board.global.exception.errorcode.MemberErrorCode;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -18,15 +22,39 @@ public class TokenService {
     private final TokenRegistrar tokenRegistrar;
     private final BlackListRegistrar blackListRegistrar;
     private final TokenExpirationManager tokenExpirationManager;
+    private final TokenResolver tokenResolver;
+    private final PasswordEncoder passwordEncoder;
+    private final MemberRepository memberRepository;
 
-    public Tokens saveToken(Member member) {
+    @Transactional
+    public Tokens login(MemberLoginRequest memberLoginRequest) {
+        Member member = findMemberBy(memberLoginRequest);
+        return saveToken(member);
+    }
+
+    public void logout(HttpServletRequest request) {
+        String accessToken = tokenResolver.resolveToken(request);
+        saveBlackList(accessToken);
+    }
+
+    private Member findMemberBy(MemberLoginRequest memberLoginRequest) {
+        Member member = memberRepository.findByLoginId(memberLoginRequest.loginId())
+                .orElseThrow(() -> new MemberException(MemberErrorCode.INVALID_CREDENTIALS));
+
+        if (!member.ischeckPassword(memberLoginRequest.password(), passwordEncoder)) {
+            throw new MemberException(MemberErrorCode.INVALID_CREDENTIALS);
+        }
+        return member;
+    }
+
+    private void saveBlackList(String accessToken) {
+        Long expriration = tokenExpirationManager.getExpriration(accessToken);
+        blackListRegistrar.registrarBlackListToken(accessToken, expriration / MILLISECONDS_IN_SECOND);
+    }
+
+    private Tokens saveToken(Member member) {
         Tokens tokens = tokenManager.issueToken(member);
         tokenRegistrar.registrarToken(member, tokens.refreshToken());
         return tokens;
-    }
-
-    public void saveBlackList(String accessToken) {
-        Long expriration = tokenExpirationManager.getExpriration(accessToken);
-        blackListRegistrar.registrarBlackListToken(accessToken, expriration / MILLISECONDS_IN_SECOND);
     }
 }

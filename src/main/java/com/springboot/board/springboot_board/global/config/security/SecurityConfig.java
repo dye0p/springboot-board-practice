@@ -1,8 +1,7 @@
 package com.springboot.board.springboot_board.global.config.security;
 
-import com.springboot.board.springboot_board.global.auth.jwt.filter.JwtAuthenticationFilter;
-import com.springboot.board.springboot_board.global.auth.jwt.TokenProvider;
 import com.springboot.board.springboot_board.global.auth.jwt.exception.JwtAuthenticationEntryPoint;
+import com.springboot.board.springboot_board.global.auth.jwt.filter.JwtAuthenticationFilter;
 import com.springboot.board.springboot_board.global.auth.jwt.filter.JwtExceptionFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +26,8 @@ public class SecurityConfig {
     private static final String[] permitList = {"/", "/h2-console/**", "/api/v1/join", "/api/v2/login",
             "/api/v1/check-email", "/api/v1/check-loginid", "/api/v2/auth/auth-code"};
 
-    private final TokenProvider tokenProvider;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final JwtExceptionFilter jwtExceptionFilter;
     private final JwtAuthenticationEntryPoint entryPoint;
 
     @Bean
@@ -49,8 +49,8 @@ public class SecurityConfig {
                         auth.anyRequest().authenticated());
 
         http
-                .addFilterBefore(new JwtAuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new JwtExceptionFilter(), JwtAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtExceptionFilter, JwtAuthenticationFilter.class)
                 .sessionManagement((session) -> session.
                         sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(handler -> handler.authenticationEntryPoint(entryPoint));

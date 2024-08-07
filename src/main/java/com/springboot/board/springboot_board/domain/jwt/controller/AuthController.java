@@ -1,9 +1,10 @@
-package com.springboot.board.springboot_board.domain.member.controller;
+package com.springboot.board.springboot_board.domain.jwt.controller;
 
 import com.springboot.board.springboot_board.domain.common.response.ApiResponse;
 import com.springboot.board.springboot_board.domain.jwt.dto.Tokens;
+import com.springboot.board.springboot_board.domain.jwt.service.TokenService;
 import com.springboot.board.springboot_board.domain.member.dto.MemberLoginRequest;
-import com.springboot.board.springboot_board.domain.member.service.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,25 +13,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 @RestController
 public class AuthController {
-    private static final int INDEX = 7;
-    private final MemberService memberService;
+
+    private final TokenService tokenService;
 
     @PostMapping("/v2/login")
     public ResponseEntity<ApiResponse<Tokens>> doLogin(@RequestBody MemberLoginRequest memberLoginRequest) {
-        Tokens token = memberService.login(memberLoginRequest);
+        Tokens token = tokenService.login(memberLoginRequest);
         return ResponseEntity.ok(ApiResponse.success(token));
     }
 
-
     @GetMapping("/v1/logout")
-    public ResponseEntity<ApiResponse<Void>> doLogout(@RequestHeader("accessToken") String accessToken) {
-        String token = accessToken.substring(INDEX);
-        memberService.logout(token);
+    public ResponseEntity<ApiResponse<Void>> doLogout(HttpServletRequest request) {
+        tokenService.logout(request);
         return ResponseEntity.ok(ApiResponse.ok());
-    }
-
-    @GetMapping("/v1/hello")
-    public String access() {
-        return "seucces Test";
     }
 }
