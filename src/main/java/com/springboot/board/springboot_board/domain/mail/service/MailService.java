@@ -1,6 +1,7 @@
-package com.springboot.board.springboot_board.domain.member.service;
+package com.springboot.board.springboot_board.domain.mail.service;
 
-import com.springboot.board.springboot_board.domain.member.dto.mail.MailSendRequest;
+import com.springboot.board.springboot_board.domain.mail.util.EmailSender;
+import com.springboot.board.springboot_board.domain.mail.dto.MailSendRequest;
 import com.springboot.board.springboot_board.domain.member.repository.MemberRepository;
 import com.springboot.board.springboot_board.global.exception.custom.MailException;
 import com.springboot.board.springboot_board.global.exception.errorcode.MailErrorCode;

@@ -1,6 +1,5 @@
-package com.springboot.board.springboot_board.domain.member.service;
+package com.springboot.board.springboot_board.domain.mail.util;
 
-import com.springboot.board.springboot_board.domain.member.util.AuthCodeGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;

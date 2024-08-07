@@ -1,4 +1,4 @@
-package com.springboot.board.springboot_board.domain.member.dto.mail;
+package com.springboot.board.springboot_board.domain.mail.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

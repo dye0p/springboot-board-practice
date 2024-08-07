@@ -1,4 +1,4 @@
-package com.springboot.board.springboot_board.domain.member.util;
+package com.springboot.board.springboot_board.domain.mail.util;
 
 import com.springboot.board.springboot_board.global.util.RedisUtil;
 import lombok.RequiredArgsConstructor;

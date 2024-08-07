@@ -1,7 +1,7 @@
-package com.springboot.board.springboot_board.domain.member.service;
+package com.springboot.board.springboot_board.domain.mail.service;
 
-import com.springboot.board.springboot_board.domain.member.dto.mail.MailVerifyRequest;
-import com.springboot.board.springboot_board.domain.member.util.AuthCodeGenerator;
+import com.springboot.board.springboot_board.domain.mail.dto.MailVerifyRequest;
+import com.springboot.board.springboot_board.domain.mail.util.AuthCodeGenerator;
 import com.springboot.board.springboot_board.global.exception.custom.MailException;
 import com.springboot.board.springboot_board.global.exception.errorcode.MailErrorCode;
 import lombok.RequiredArgsConstructor;
