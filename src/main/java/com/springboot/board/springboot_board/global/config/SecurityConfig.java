@@ -1,4 +1,4 @@
-package com.springboot.board.springboot_board.global.config.security;
+package com.springboot.board.springboot_board.global.config;
 
 import com.springboot.board.springboot_board.domain.jwt.business.TokenResolver;
 import com.springboot.board.springboot_board.global.auth.jwt.TokenProvider;

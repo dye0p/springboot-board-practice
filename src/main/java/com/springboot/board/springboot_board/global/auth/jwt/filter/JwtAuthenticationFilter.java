@@ -4,7 +4,7 @@ import com.springboot.board.springboot_board.domain.common.Role;
 import com.springboot.board.springboot_board.domain.jwt.business.TokenResolver;
 import com.springboot.board.springboot_board.domain.member.domain.Member;
 import com.springboot.board.springboot_board.global.auth.jwt.TokenProvider;
-import com.springboot.board.springboot_board.global.config.security.CustomUserDetails;
+import com.springboot.board.springboot_board.global.auth.CustomUserDetails;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
