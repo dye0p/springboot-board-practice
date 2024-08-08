@@ -1,6 +1,7 @@
 package com.springboot.board.springboot_board.domain.common.response;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,28 +10,22 @@ import lombok.NoArgsConstructor;
 public class ApiResponse<T> {
 
     private boolean success;
+    private int code;
     private String message;
     private T data;
 
-    protected ApiResponse(boolean success, String message, T data) {
+    @Builder
+    protected ApiResponse(boolean success, int code, String message) {
         this.success = success;
+        this.code = code;
+        this.message = message;
+    }
+
+    @Builder
+    protected ApiResponse(boolean success, int code, String message, T data) {
+        this.success = success;
+        this.code = code;
         this.message = message;
         this.data = data;
-    }
-
-    public static <T> ApiResponse<T> success(T data) {
-        return new ApiResponse<>(true, null, data);
-    }
-
-    public static <T> ApiResponse<T> ok(String message) {
-        return new ApiResponse<>(true, message, null);
-    }
-
-    public static <T> ApiResponse<T> ok() {
-        return new ApiResponse<>(true, null, null);
-    }
-
-    public static <T> ApiResponse<T> error(String message) {
-        return new ApiResponse<>(false, message, null);
     }
 }

@@ -62,17 +62,17 @@ public class TokenProvider {
             Jwts.parser().verifyWith(jwtProperties.getSecretKey())
                     .build().parseSignedClaims(token);
             return true;
-        } catch (SecurityException | SignatureException | MalformedJwtException e) {
-            log.info("Invalid JWT Token", e);
+        } catch (SecurityException | SignatureException | MalformedJwtException exception) {
+            log.warn("유효하지 않은 JWT 토큰", exception);
             throw new JwtAuthenticationException(TokenErrorCode.AUTH_INVALID_TOKEN);
-        } catch (ExpiredJwtException e) {
-            log.info("Expired JWT Token", e);
+        } catch (ExpiredJwtException exception) {
+            log.warn("만료된 JWT 토큰", exception);
             throw new JwtAuthenticationException(TokenErrorCode.AUTH_TOKEN_HAS_EXPIRED);
-        } catch (UnsupportedJwtException e) {
-            log.info("Unsupported JWT Token", e);
+        } catch (UnsupportedJwtException exception) {
+            log.warn("지원되지 않는 JWT 토큰", exception);
             throw new JwtAuthenticationException(TokenErrorCode.AUTH_TOKEN_IS_UNSUPPORTED);
-        } catch (IllegalArgumentException e) {
-            log.info("JWT claims string is empty.", e);
+        } catch (IllegalArgumentException exception) {
+            log.warn("JWT 클레임 문자열이 비어 있습니다.", exception);
             throw new JwtAuthenticationException(TokenErrorCode.AUTH_IS_NULL);
         }
     }

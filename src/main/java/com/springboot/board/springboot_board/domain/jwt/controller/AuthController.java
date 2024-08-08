@@ -1,6 +1,7 @@
 package com.springboot.board.springboot_board.domain.jwt.controller;
 
 import com.springboot.board.springboot_board.domain.common.response.ApiResponse;
+import com.springboot.board.springboot_board.domain.common.response.SuccessResponse;
 import com.springboot.board.springboot_board.domain.jwt.dto.Tokens;
 import com.springboot.board.springboot_board.domain.jwt.service.TokenService;
 import com.springboot.board.springboot_board.domain.member.dto.MemberLoginRequest;
@@ -19,12 +20,12 @@ public class AuthController {
     @PostMapping("/v2/login")
     public ResponseEntity<ApiResponse<Tokens>> doLogin(@RequestBody MemberLoginRequest memberLoginRequest) {
         Tokens token = tokenService.login(memberLoginRequest);
-        return ResponseEntity.ok(ApiResponse.success(token));
+        return ResponseEntity.ok(SuccessResponse.of(token));
     }
 
     @GetMapping("/v1/logout")
     public ResponseEntity<ApiResponse<Void>> doLogout(HttpServletRequest request) {
         tokenService.logout(request);
-        return ResponseEntity.ok(ApiResponse.ok());
+        return ResponseEntity.ok(SuccessResponse.ok());
     }
 }

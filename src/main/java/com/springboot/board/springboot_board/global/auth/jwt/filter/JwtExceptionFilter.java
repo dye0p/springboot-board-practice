@@ -1,6 +1,7 @@
 package com.springboot.board.springboot_board.global.auth.jwt.filter;
 
 import com.springboot.board.springboot_board.domain.common.response.ApiResponse;
+import com.springboot.board.springboot_board.domain.common.response.FailResponse;
 import com.springboot.board.springboot_board.global.auth.jwt.exception.JwtCustomErrorSend;
 import com.springboot.board.springboot_board.global.exception.custom.JwtAuthenticationException;
 import com.springboot.board.springboot_board.global.exception.errorcode.TokenErrorCode;
@@ -10,13 +11,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
 @Slf4j
-@Component
 public class JwtExceptionFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(
@@ -27,9 +26,8 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
         try {
             filterChain.doFilter(request, response);
         } catch (JwtAuthenticationException exception) {
-            log.warn("Exception: {}", exception.getMessage());
-            ApiResponse<Object> apiResponse = ApiResponse.error(exception.getMessage());
             TokenErrorCode errorCode = TokenErrorCode.fromMessage(exception.getMessage());
+            ApiResponse<Object> apiResponse = FailResponse.fail(errorCode.getHttpStatus(),exception.getMessage());
 
             JwtCustomErrorSend.handleException(response, errorCode, apiResponse);
         }
