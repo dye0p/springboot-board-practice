@@ -21,11 +21,14 @@ public class BlackList {
     private Long expirationTime;
 
     @Builder
-    private BlackList(String accessToken, Long expirationTime) {
+    protected BlackList(String accessToken, Long expirationTime) {
         this.accessToken = accessToken;
         this.expirationTime = expirationTime;
     }
     public static BlackList of(String accessToken, Long expirationTime) {
-        return new BlackList(accessToken, expirationTime);
+        return BlackList.builder()
+                .accessToken(accessToken)
+                .expirationTime(expirationTime)
+                .build();
     }
 }

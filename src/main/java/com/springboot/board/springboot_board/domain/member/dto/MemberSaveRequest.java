@@ -1,7 +1,5 @@
 package com.springboot.board.springboot_board.domain.member.dto;
 
-import com.springboot.board.springboot_board.domain.common.Role;
-import com.springboot.board.springboot_board.domain.member.domain.Member;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
@@ -24,19 +22,6 @@ public record MemberSaveRequest(
         String email,
 
         @Pattern(regexp = "^01(?:0|1|[6-9])-\\d{3,4}-\\d{4}$", message = "올바른 휴대폰 번호 형식이 아닙니다.")
-        String phone,
-
-        Role role
+        String phone
 ) {
-
-    public Member toEntity() {
-        return Member.builder()
-                .loginId(loginId)
-                .password(password)
-                .nickname(nickname)
-                .email(email)
-                .phone(phone)
-                .role(Role.USER)
-                .build();
-    }
 }

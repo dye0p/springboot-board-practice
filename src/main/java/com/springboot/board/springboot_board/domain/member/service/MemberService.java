@@ -21,11 +21,10 @@ public class MemberService {
 
     @Transactional
     public MemberSaveResponse join(MemberSaveRequest memberSaveRequest) {
-        if(memberRepository.existsByLoginId(memberSaveRequest.loginId()))
+        if (memberRepository.existsByLoginId(memberSaveRequest.loginId()))
             throw new MemberException(MemberErrorCode.MEMBER_DUPLICATION);
 
-        Member member = memberSaveRequest.toEntity();
-        member.encodePassword(passwordEncoder);
+        Member member = createMember(memberSaveRequest);
         memberRepository.save(member);
 
         return MemberSaveResponse.ofMember(member);
@@ -39,6 +38,15 @@ public class MemberService {
     public void checkLonginIdDuplicate(String loginId) {
         if (memberRepository.existsByLoginId(loginId))
             throw new MemberException(MemberErrorCode.LOGINID_DUPLICATION);
+    }
+
+    private Member createMember(MemberSaveRequest memberSaveRequest) {
+        return Member.create(memberSaveRequest.loginId(),
+                memberSaveRequest.password(),
+                memberSaveRequest.nickname(),
+                memberSaveRequest.email(),
+                memberSaveRequest.phone(),
+                passwordEncoder);
     }
 }
 

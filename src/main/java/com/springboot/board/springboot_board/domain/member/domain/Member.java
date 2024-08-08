@@ -40,25 +40,33 @@ public class Member extends BaseTime {
     private Role role;
 
     @Builder
-    private Member(Long id, String loginId, String nickname, String email, String password, String phone, Role role) {
-        this.email = email;
+    protected Member(Long id, String loginId, String password, String nickname, String email, String phone, Role role) {
         this.id = id;
         this.loginId = loginId;
-        this.nickname = nickname;
         this.password = password;
+        this.nickname = nickname;
+        this.email = email;
         this.phone = phone;
         this.role = role;
     }
 
-    public void encodePassword(PasswordEncoder passwordEncoder) {
-        this.password = passwordEncoder.encode(password);
+    public static Member create(String loginId, String password, String nickname,
+                                String email, String phone, PasswordEncoder passwordEncoder) {
+        return Member.builder()
+                .loginId(loginId)
+                .password(passwordEncoder.encode(password))
+                .nickname(nickname)
+                .email(email)
+                .phone(phone)
+                .role(Role.USER)
+                .build();
     }
 
     public boolean ischeckPassword(String rawPassword, PasswordEncoder passwordEncoder) {
         return passwordEncoder.matches(rawPassword, password);
     }
 
-    public TokenPayload tokenPayload() {
+    public TokenPayload createTokenPayload() {
         return new TokenPayload(this.loginId, this.role.getValue());
     }
 }

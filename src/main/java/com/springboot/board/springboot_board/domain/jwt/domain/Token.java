@@ -20,12 +20,15 @@ public class Token {
     private String refreshToken;
 
     @Builder
-    private Token(String loginId, String refreshToken) {
+    protected Token(String loginId, String refreshToken) {
         this.loginId = loginId;
         this.refreshToken = refreshToken;
     }
 
     public static Token of(String loginId, String refreshToken) {
-        return new Token(loginId, refreshToken);
+        return Token.builder()
+                .loginId(loginId)
+                .refreshToken(refreshToken)
+                .build();
     }
 }

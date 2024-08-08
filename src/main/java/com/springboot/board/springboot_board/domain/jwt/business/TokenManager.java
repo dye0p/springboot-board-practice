@@ -13,6 +13,6 @@ public class TokenManager {
     private final TokenProvider tokenProvider;
 
     public Tokens issueToken(Member member) {
-        return tokenProvider.creatTokens(member.tokenPayload());
+        return tokenProvider.creatTokens(member.createTokenPayload());
     }
 }
