@@ -119,6 +119,20 @@ class MemberRepositoryTest {
         Optional<Member> result = memberRepository.findByLoginId(loginId);
 
         //then
-        assertThat(result).isNotNull();
+        assertThat(result).isPresent();
+        assertThat(result.get().getLoginId()).isEqualTo(loginId);
+    }
+
+    @DisplayName("loginId로 일치하는 member가 없을때 Optional.empty를 반환한다")
+    @Test
+    void findByLoginIdWithEmpty() {
+        //given
+        String loginId = "id";
+
+        //when
+        Optional<Member> result = memberRepository.findByLoginId(loginId);
+
+        //then
+        assertThat(result).isEmpty();
     }
 }
