@@ -40,8 +40,7 @@ public class Member extends BaseTime {
     private Role role;
 
     @Builder
-    protected Member(Long id, String loginId, String password, String nickname, String email, String phone, Role role) {
-        this.id = id;
+    protected Member(String loginId, String password, String nickname, String email, String phone, Role role) {
         this.loginId = loginId;
         this.password = password;
         this.nickname = nickname;
