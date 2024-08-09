@@ -11,7 +11,7 @@ public record MemberSaveResponse(
         String role
 ) {
 
-    public static MemberSaveResponse ofMember(Member member) {
+    public static MemberSaveResponse of(Member member) {
         return MemberSaveResponse.builder()
                 .id(member.getId())
                 .nickname(member.getNickname())

@@ -2,8 +2,8 @@ package com.springboot.board.springboot_board.domain.member.controller;
 
 import com.springboot.board.springboot_board.domain.common.response.ApiResponse;
 import com.springboot.board.springboot_board.domain.common.response.SuccessResponse;
-import com.springboot.board.springboot_board.domain.member.dto.MemberSaveRequest;
 import com.springboot.board.springboot_board.domain.member.dto.MemberSaveResponse;
+import com.springboot.board.springboot_board.domain.member.dto.request.MemberSaveRequest;
 import com.springboot.board.springboot_board.domain.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

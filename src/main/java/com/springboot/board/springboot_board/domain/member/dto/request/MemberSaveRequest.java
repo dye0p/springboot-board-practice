@@ -1,8 +1,10 @@
-package com.springboot.board.springboot_board.domain.member.dto;
+package com.springboot.board.springboot_board.domain.member.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import lombok.Builder;
 
+@Builder
 public record MemberSaveRequest(
 
         @NotBlank(message = "아이디는 필수 입력 값입니다.")
@@ -21,7 +23,8 @@ public record MemberSaveRequest(
         @Pattern(regexp = "^(?:\\w+\\.?)*\\w+@(?:\\w+\\.)+\\w+$", message = "이메일 형식이 올바르지 않습니다.")
         String email,
 
-        @Pattern(regexp = "^01(?:0|1|[6-9])-\\d{3,4}-\\d{4}$", message = "올바른 휴대폰 번호 형식이 아닙니다.")
+        @NotBlank(message = "전화번호는 필수 입력 값입니다.")
+        @Pattern(regexp = "^01(?:0|1|[6-9])-\\d{3,4}-\\d{4}$", message = "올바른 전화번호 형식이 아닙니다.")
         String phone
 ) {
 }

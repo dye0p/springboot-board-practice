@@ -3,7 +3,7 @@ package com.springboot.board.springboot_board.domain.jwt.service;
 import com.springboot.board.springboot_board.domain.jwt.business.*;
 import com.springboot.board.springboot_board.domain.jwt.dto.Tokens;
 import com.springboot.board.springboot_board.domain.member.domain.Member;
-import com.springboot.board.springboot_board.domain.member.dto.MemberLoginRequest;
+import com.springboot.board.springboot_board.domain.member.dto.request.MemberLoginRequest;
 import com.springboot.board.springboot_board.domain.member.repository.MemberRepository;
 import com.springboot.board.springboot_board.global.exception.custom.MemberException;
 import com.springboot.board.springboot_board.global.exception.errorcode.MemberErrorCode;
