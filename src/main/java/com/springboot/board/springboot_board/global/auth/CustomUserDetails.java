@@ -1,6 +1,6 @@
 package com.springboot.board.springboot_board.global.auth;
 
-import com.springboot.board.springboot_board.domain.member.domain.Member;
+import com.springboot.board.springboot_board.domain.member.Member;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

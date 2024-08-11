@@ -1,7 +1,7 @@
 package com.springboot.board.springboot_board.global.auth.jwt.filter;
 
-import com.springboot.board.springboot_board.domain.common.response.ApiResponse;
-import com.springboot.board.springboot_board.domain.common.response.FailResponse;
+import com.springboot.board.springboot_board.global.response.ApiResponse;
+import com.springboot.board.springboot_board.global.response.FailResponse;
 import com.springboot.board.springboot_board.global.auth.jwt.exception.JwtCustomErrorSend;
 import com.springboot.board.springboot_board.global.exception.custom.JwtAuthenticationException;
 import com.springboot.board.springboot_board.global.exception.errorcode.TokenErrorCode;

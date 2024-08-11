@@ -1,9 +1,9 @@
 package com.springboot.board.springboot_board.global.auth.jwt.filter;
 
-import com.springboot.board.springboot_board.domain.common.Role;
-import com.springboot.board.springboot_board.domain.jwt.business.TokenResolver;
-import com.springboot.board.springboot_board.domain.member.domain.Member;
-import com.springboot.board.springboot_board.global.auth.jwt.TokenProvider;
+import com.springboot.board.springboot_board.domain.member.Role;
+import com.springboot.board.springboot_board.application.auth.business.TokenResolver;
+import com.springboot.board.springboot_board.domain.member.Member;
+import com.springboot.board.springboot_board.application.auth.business.TokenProvider;
 import com.springboot.board.springboot_board.global.auth.CustomUserDetails;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

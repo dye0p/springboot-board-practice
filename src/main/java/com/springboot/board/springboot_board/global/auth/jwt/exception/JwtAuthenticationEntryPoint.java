@@ -1,7 +1,7 @@
 package com.springboot.board.springboot_board.global.auth.jwt.exception;
 
-import com.springboot.board.springboot_board.domain.common.response.ApiResponse;
-import com.springboot.board.springboot_board.domain.common.response.FailResponse;
+import com.springboot.board.springboot_board.global.response.ApiResponse;
+import com.springboot.board.springboot_board.global.response.FailResponse;
 import com.springboot.board.springboot_board.global.exception.errorcode.TokenErrorCode;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

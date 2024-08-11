@@ -1,7 +1,7 @@
 package com.springboot.board.springboot_board.global.config;
 
-import com.springboot.board.springboot_board.domain.jwt.business.TokenResolver;
-import com.springboot.board.springboot_board.global.auth.jwt.TokenProvider;
+import com.springboot.board.springboot_board.application.auth.business.TokenResolver;
+import com.springboot.board.springboot_board.application.auth.business.TokenProvider;
 import com.springboot.board.springboot_board.global.auth.jwt.exception.JwtAuthenticationEntryPoint;
 import com.springboot.board.springboot_board.global.auth.jwt.filter.JwtAuthenticationFilter;
 import com.springboot.board.springboot_board.global.auth.jwt.filter.JwtExceptionFilter;

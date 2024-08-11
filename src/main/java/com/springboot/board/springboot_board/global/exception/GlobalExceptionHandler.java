@@ -1,7 +1,7 @@
 package com.springboot.board.springboot_board.global.exception;
 
-import com.springboot.board.springboot_board.domain.common.response.ApiResponse;
-import com.springboot.board.springboot_board.domain.common.response.FailResponse;
+import com.springboot.board.springboot_board.global.response.ApiResponse;
+import com.springboot.board.springboot_board.global.response.FailResponse;
 import com.springboot.board.springboot_board.global.exception.custom.MailException;
 import com.springboot.board.springboot_board.global.exception.custom.MemberException;
 import com.springboot.board.springboot_board.global.exception.errorcode.ErrorCode;
