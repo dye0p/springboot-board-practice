@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Pattern;
 
 public record MailSendRequest(
         @NotBlank(message = "이메일을 입력해주세요")
-        @Pattern(regexp = "^(?:\\w+\\.?)*\\w+@(?:\\w+\\.)+\\w+$", message = "이메일 형식이 올바르지 않습니다.")
+        @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,6}$", message = "이메일 형식이 올바르지 않습니다.")
         String email
 ) {
 }
