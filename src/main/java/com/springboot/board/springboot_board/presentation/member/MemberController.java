@@ -33,6 +33,6 @@ public class MemberController {
     @GetMapping("/v1/check-loginid")
     public ResponseEntity<ApiResponse<String>> checkLoginIdDuplicate(@RequestParam String loginId) {
         memberService.checkLonginIdDuplicate(loginId);
-        return ResponseEntity.ok(SuccessResponse.of("사용 가능한 아이디 입니다"));
+        return ResponseEntity.ok(SuccessResponse.ok("사용 가능한 아이디 입니다"));
     }
 }

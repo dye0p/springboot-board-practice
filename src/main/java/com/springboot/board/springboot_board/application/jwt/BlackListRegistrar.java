@@ -1,4 +1,4 @@
-package com.springboot.board.springboot_board.application.auth.business;
+package com.springboot.board.springboot_board.application.jwt;
 
 import com.springboot.board.springboot_board.domain.jwt.BlackList;
 import com.springboot.board.springboot_board.domain.jwt.BlackListRepository;

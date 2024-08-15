@@ -1,9 +1,9 @@
 package com.springboot.board.springboot_board.global.auth.jwt.filter;
 
-import com.springboot.board.springboot_board.domain.member.Role;
-import com.springboot.board.springboot_board.application.auth.business.TokenResolver;
+import com.springboot.board.springboot_board.application.jwt.TokenProvider;
+import com.springboot.board.springboot_board.application.jwt.TokenResolver;
 import com.springboot.board.springboot_board.domain.member.Member;
-import com.springboot.board.springboot_board.application.auth.business.TokenProvider;
+import com.springboot.board.springboot_board.domain.member.Role;
 import com.springboot.board.springboot_board.global.auth.CustomUserDetails;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -35,12 +35,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String token = tokenResolver.resolveToken(request);
 
-        if (token != null && tokenProvider.validateToken(token)) {
+        if (isValidToken(token)) {
             Authentication authToken = getAuthentication(token);
-            SecurityContextHolder.getContext().setAuthentication(authToken);
+            setAuthentication(authToken);
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private boolean isValidToken(String token) {
+        return token != null && tokenProvider.validateToken(token);
+    }
+
+    private void setAuthentication(Authentication authToken) {
+        SecurityContextHolder.getContext().setAuthentication(authToken);
     }
 
     private Authentication getAuthentication(String token) {
@@ -57,6 +65,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return new UsernamePasswordAuthenticationToken(memberDetails, null,
                 memberDetails.getAuthorities());
     }
-
-
 }

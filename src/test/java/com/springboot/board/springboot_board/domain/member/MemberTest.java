@@ -1,6 +1,6 @@
 package com.springboot.board.springboot_board.domain.member;
 
-import com.springboot.board.springboot_board.application.auth.dto.TokenPayload;
+import com.springboot.board.springboot_board.application.jwt.dto.TokenPayload;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

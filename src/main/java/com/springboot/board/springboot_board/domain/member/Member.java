@@ -1,7 +1,7 @@
 package com.springboot.board.springboot_board.domain.member;
 
 import com.springboot.board.springboot_board.domain.common.BaseTime;
-import com.springboot.board.springboot_board.application.auth.dto.TokenPayload;
+import com.springboot.board.springboot_board.application.jwt.dto.TokenPayload;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
