@@ -1,4 +1,4 @@
-package com.springboot.board.springboot_board.application.auth.business;
+package com.springboot.board.springboot_board.application.jwt;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
@@ -12,11 +12,19 @@ public class TokenResolver {
     private static final int TOKEN_INDEX = 7;
 
     public String resolveToken(HttpServletRequest request) {
-        String authorization = request.getHeader(TOKEN_HEADER);
+        String authorization = getHeader(request);
 
-        if (StringUtils.hasText(authorization) && authorization.startsWith(TOKEN_TYPE)) {
+        if (isValidAuthorizationHeader(authorization)) {
             return authorization.substring(TOKEN_INDEX);
         }
         return null;
+    }
+
+    private String getHeader(HttpServletRequest request) {
+        return request.getHeader(TOKEN_HEADER);
+    }
+
+    private boolean isValidAuthorizationHeader(String authorization) {
+        return StringUtils.hasText(authorization) && authorization.startsWith(TOKEN_TYPE);
     }
 }

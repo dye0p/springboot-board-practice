@@ -1,6 +1,6 @@
-package com.springboot.board.springboot_board.application.auth.business;
+package com.springboot.board.springboot_board.application.jwt;
 
-import com.springboot.board.springboot_board.application.auth.dto.Tokens;
+import com.springboot.board.springboot_board.application.jwt.dto.Tokens;
 import com.springboot.board.springboot_board.domain.member.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

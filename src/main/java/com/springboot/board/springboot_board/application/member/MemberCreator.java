@@ -1,4 +1,4 @@
-package com.springboot.board.springboot_board.application.member.business;
+package com.springboot.board.springboot_board.application.member;
 
 import com.springboot.board.springboot_board.domain.member.Member;
 import com.springboot.board.springboot_board.application.member.dto.request.MemberSaveRequest;
@@ -14,7 +14,7 @@ public class MemberCreator {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public Member creatMember(MemberSaveRequest memberSaveRequest) {
+    public Member creatMember(final MemberSaveRequest memberSaveRequest) {
 
         Member member = Member.create(memberSaveRequest.loginId(),
                 memberSaveRequest.password(),

@@ -1,4 +1,4 @@
-package com.springboot.board.springboot_board.application.auth.business;
+package com.springboot.board.springboot_board.application.jwt;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

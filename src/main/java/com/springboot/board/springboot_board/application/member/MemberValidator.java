@@ -1,4 +1,4 @@
-package com.springboot.board.springboot_board.application.member.business;
+package com.springboot.board.springboot_board.application.member;
 
 
 import com.springboot.board.springboot_board.domain.member.MemberRepository;
@@ -13,7 +13,7 @@ public class MemberValidator {
 
     private final MemberRepository memberRepository;
 
-    public void validateDuplicatedToEmail(String email) {
+    public void validateDuplicatedToEmail(final String email) {
         if (memberRepository.existsByEmail(email))
             throw new MemberException(MemberErrorCode.EMAIL_DUPLICATION);
     }

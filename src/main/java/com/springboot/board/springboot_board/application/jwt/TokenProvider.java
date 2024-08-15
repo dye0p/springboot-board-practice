@@ -1,8 +1,8 @@
-package com.springboot.board.springboot_board.application.auth.business;
+package com.springboot.board.springboot_board.application.jwt;
 
 
-import com.springboot.board.springboot_board.application.auth.dto.TokenPayload;
-import com.springboot.board.springboot_board.application.auth.dto.Tokens;
+import com.springboot.board.springboot_board.application.jwt.dto.TokenPayload;
+import com.springboot.board.springboot_board.application.jwt.dto.Tokens;
 import com.springboot.board.springboot_board.global.exception.custom.JwtAuthenticationException;
 import com.springboot.board.springboot_board.global.exception.errorcode.TokenErrorCode;
 import com.springboot.board.springboot_board.global.properties.JwtProperties;

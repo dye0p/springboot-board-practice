@@ -1,4 +1,4 @@
-package com.springboot.board.springboot_board.application.mail.business;
+package com.springboot.board.springboot_board.infra.mail;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
@@ -8,34 +8,24 @@ import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-public class EmailSender {
+public class MailProvider {
     private static final String DEFAULT_TITLE = "회원가입을 위한 이메일 인증코드 입니다.";
     private static final String DEFAULT_MESSAGE = "이메일 인증 코드 입니다: ";
 
-    private final AuthCodeGenerator authCodeGenerator;
     private final JavaMailSender javaMailSender;
 
     @Async("mailExecutor")
-    public void sendMail(SimpleMailMessage message) {
-        javaMailSender.send(message);
+    public void sendMail(String email, String authCode) {
+        javaMailSender.send(createMailForm(email, authCode));
     }
 
-    public SimpleMailMessage createMailMessage(String toEmail) {
+    private SimpleMailMessage createMailForm(String email, String authCode) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
 
-        String authCode = generateAndSaveAuthCode(toEmail);
-
-        mailMessage.setTo(toEmail);
+        mailMessage.setTo(email);
         mailMessage.setSubject(DEFAULT_TITLE);
         mailMessage.setText(DEFAULT_MESSAGE + authCode);
 
         return mailMessage;
     }
-
-    private String generateAndSaveAuthCode(String toemail) {
-        String authCode = authCodeGenerator.generateAuthCode();
-        authCodeGenerator.saveAuthCode(toemail, authCode);
-        return authCode;
-    }
 }
-

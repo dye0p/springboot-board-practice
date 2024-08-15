@@ -1,4 +1,4 @@
-package com.springboot.board.springboot_board.application.mail.dto;
+package com.springboot.board.springboot_board.application.auth.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

@@ -1,4 +1,4 @@
-package com.springboot.board.springboot_board.application.auth.business;
+package com.springboot.board.springboot_board.application.jwt;
 
 import com.springboot.board.springboot_board.domain.jwt.Token;
 import com.springboot.board.springboot_board.domain.jwt.TokenRepository;

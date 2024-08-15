@@ -1,4 +1,4 @@
-package com.springboot.board.springboot_board.application.auth.dto;
+package com.springboot.board.springboot_board.application.jwt.dto;
 
 public record Tokens(
         String accessToken,
