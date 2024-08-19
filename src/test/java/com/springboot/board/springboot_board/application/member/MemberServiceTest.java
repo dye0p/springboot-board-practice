@@ -1,5 +1,6 @@
 package com.springboot.board.springboot_board.application.member;
 
+import com.springboot.board.springboot_board.IntegrationTestSupport;
 import com.springboot.board.springboot_board.application.member.dto.request.MemberSaveRequest;
 import com.springboot.board.springboot_board.application.member.dto.response.MemberSaveResponse;
 import com.springboot.board.springboot_board.domain.member.Member;
@@ -10,15 +11,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@ActiveProfiles("test")
-@SpringBootTest
-class MemberServiceTest {
+class MemberServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private MemberService memberService;
@@ -28,7 +25,7 @@ class MemberServiceTest {
 
     @AfterEach
     void tearDown() {
-        memberRepository.deleteAll();
+        memberRepository.deleteAllInBatch();
     }
 
     @DisplayName("회원을 생성하여 저장할 수 있다.")
