@@ -1,10 +1,13 @@
 package com.springboot.board.springboot_board.presentation.auth;
 
+import com.springboot.board.springboot_board.application.auth.AuthService;
+import com.springboot.board.springboot_board.application.auth.dto.MailSendRequest;
+import com.springboot.board.springboot_board.application.auth.dto.MailVerifyRequest;
+import com.springboot.board.springboot_board.application.jwt.TokenService;
+import com.springboot.board.springboot_board.application.jwt.dto.Tokens;
+import com.springboot.board.springboot_board.application.member.dto.request.MemberLoginRequest;
 import com.springboot.board.springboot_board.global.response.ApiResponse;
 import com.springboot.board.springboot_board.global.response.SuccessResponse;
-import com.springboot.board.springboot_board.application.auth.dto.Tokens;
-import com.springboot.board.springboot_board.application.auth.TokenService;
-import com.springboot.board.springboot_board.application.member.dto.request.MemberLoginRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +19,20 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class AuthController {
 
+    private final AuthService authService;
     private final TokenService tokenService;
+
+    @PostMapping("/v2/auth/auth-code")
+    public ResponseEntity<ApiResponse<Void>> sendEmail(@RequestBody @Valid MailSendRequest mailSendRequest) {
+        authService.checkAndSendEmail(mailSendRequest);
+        return ResponseEntity.ok(SuccessResponse.ok("인증코드가 전송되었습니다"));
+    }
+
+    @GetMapping("/v2/auth/auth-code")
+    public ResponseEntity<ApiResponse<Void>> verifyMailAuthCode(@RequestBody @Valid MailVerifyRequest mailVerifyRequest) {
+        authService.verifyAuthCode(mailVerifyRequest);
+        return ResponseEntity.ok(SuccessResponse.ok("인증되었습니다"));
+    }
 
     @PostMapping("/v2/login")
     public ResponseEntity<ApiResponse<Tokens>> doLogin(@RequestBody @Valid MemberLoginRequest memberLoginRequest) {

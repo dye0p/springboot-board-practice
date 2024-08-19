@@ -29,7 +29,7 @@ public class MemberController {
         memberService.checkEmailDuplicate(email);
         return ResponseEntity.ok(SuccessResponse.ok("사용 가능한 이메일 입니다"));
     }
-
+    
     @GetMapping("/v1/check-loginid")
     public ResponseEntity<ApiResponse<String>> checkLoginIdDuplicate(@RequestParam String loginId) {
         memberService.checkLonginIdDuplicate(loginId);
