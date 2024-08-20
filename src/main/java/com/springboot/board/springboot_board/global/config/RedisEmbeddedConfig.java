@@ -1,7 +1,6 @@
 package com.springboot.board.springboot_board.global.config;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -27,13 +26,7 @@ public class RedisEmbeddedConfig {
         int port = isRedisRunning() ? findAvailablePort() : redisPort;
         redisServer = new RedisServer(port);
         redisServer.start();
-    }
-
-    @PreDestroy
-    private void stop() throws IOException {
-        if (redisServer != null) {
-            redisServer.stop();
-        }
+        log.info("Embedded Redis server started on port: {}", port);
     }
 
     private boolean isRedisRunning() throws IOException {
