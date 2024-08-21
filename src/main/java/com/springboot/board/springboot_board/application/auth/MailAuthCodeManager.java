@@ -19,7 +19,7 @@ public class MailAuthCodeManager {
         snedMail(email, mailAuthCode);
     }
 
-    public void snedMail(String email, MailAuthCode mailAuthCode) {
+    private void snedMail(String email, MailAuthCode mailAuthCode) {
         mailProvider.sendMail(email, MailMessage.of(mailAuthCode.getAuthCode()));
     }
 
