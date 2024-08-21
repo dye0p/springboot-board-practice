@@ -1,5 +1,6 @@
 package com.springboot.board.springboot_board.application.member;
 
+import com.springboot.board.springboot_board.IntegrationTestSupport;
 import com.springboot.board.springboot_board.domain.member.Member;
 import com.springboot.board.springboot_board.domain.member.MemberRepository;
 import com.springboot.board.springboot_board.domain.member.Role;
@@ -8,12 +9,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@SpringBootTest
-class MemberValidatorTest {
+class MemberValidatorTest extends IntegrationTestSupport {
 
     @Autowired
     private MemberRepository memberRepository;
@@ -23,7 +22,7 @@ class MemberValidatorTest {
 
     @AfterEach
     void tearDown() {
-        memberRepository.deleteAll();
+        memberRepository.deleteAllInBatch();
     }
 
     @DisplayName("중복된 email이 존재할 때 예외를 던진다.")
