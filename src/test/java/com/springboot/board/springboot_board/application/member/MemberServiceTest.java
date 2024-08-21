@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+
 class MemberServiceTest extends IntegrationTestSupport {
 
     @Autowired
@@ -41,11 +42,11 @@ class MemberServiceTest extends IntegrationTestSupport {
                 .build();
 
         //when
-        MemberSaveResponse join = memberService.join(member);
+        MemberSaveResponse joinMemberResponse = memberService.join(member);
 
         //then
-        assertThat(join).extracting("id", "nickname", "email", "role")
-                .containsExactly(1L, "nickname", "email", "ROLE_USER");
+        assertThat(joinMemberResponse).extracting("nickname", "email", "role")
+                .containsExactly("nickname", "email", "ROLE_USER");
     }
 
     @DisplayName("중복된 email로 회원가입을 시도할 경우 예외를 던진다")

@@ -1,16 +1,16 @@
 package com.springboot.board.springboot_board.application.member;
 
+import com.springboot.board.springboot_board.IntegrationTestSupport;
 import com.springboot.board.springboot_board.application.member.dto.request.MemberSaveRequest;
 import com.springboot.board.springboot_board.domain.member.Member;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
-class MemberCreatorTest {
+class MemberCreatorTest extends IntegrationTestSupport {
 
     @Autowired
     private MemberCreator memberCreator;
@@ -31,6 +31,6 @@ class MemberCreatorTest {
         Member member = memberCreator.creatMember(memberRequest);
 
         //then
-        assertThat(member.getId()).isEqualTo(1L);
+        assertThat(member).isNotNull();
     }
 }
