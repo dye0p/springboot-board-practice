@@ -65,4 +65,8 @@ public class MailAuthCode {
     private static int getIndex(SecureRandom random) {
         return random.nextInt(CHARACTERS.length());
     }
+
+    public boolean isCorrectAuthCode(String inputAuthCode) {
+        return inputAuthCode.equals(this.authCode);
+    }
 }

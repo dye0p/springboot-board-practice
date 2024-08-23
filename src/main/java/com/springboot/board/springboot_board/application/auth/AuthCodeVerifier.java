@@ -30,7 +30,7 @@ public class AuthCodeVerifier {
     }
 
     private boolean isValidAuthCode(MailAuthCode mailAuthCode, String inputAuthCode) {
-        return mailAuthCode != null && mailAuthCode.getAuthCode().equals(inputAuthCode);
+        return mailAuthCode != null && mailAuthCode.isCorrectAuthCode(inputAuthCode);
     }
 
     private void removeAuthCode(String email) {

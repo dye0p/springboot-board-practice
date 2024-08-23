@@ -36,4 +36,38 @@ class MailAuthCodeTest {
         //then
         assertThat(mailAuthCode.getExpirationTime()).isEqualTo(300L);
     }
+
+    @DisplayName("입력된 authCode가 현재 authCode와 같다면 true를 반환한다")
+    @Test
+    void isCorrectAuthCodeThenTrue() {
+        //given
+        MailAuthCode authCode = MailAuthCode.builder()
+                .authCode("1234")
+                .build();
+
+        String inputAuthCode = "1234";
+
+        //when
+        boolean result = authCode.isCorrectAuthCode(inputAuthCode);
+
+        //then
+        assertThat(result).isTrue();
+    }
+
+    @DisplayName("입력된 authCode가 현재 authCode와 다르다면 false를 반환한다")
+    @Test
+    void isCorrectAuthCodeThenFalse() {
+        //given
+        MailAuthCode authCode = MailAuthCode.builder()
+                .authCode("12345")
+                .build();
+
+        String inputAuthCode = "1234";
+
+        //when
+        boolean result = authCode.isCorrectAuthCode(inputAuthCode);
+
+        //then
+        assertThat(result).isFalse();
+    }
 }
