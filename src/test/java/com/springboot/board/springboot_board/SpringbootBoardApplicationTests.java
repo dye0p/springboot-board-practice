@@ -1,10 +1,8 @@
 package com.springboot.board.springboot_board;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class SpringbootBoardApplicationTests {
+class SpringbootBoardApplicationTests extends IntegrationTestSupport{
 
 	@Test
 	void contextLoads() {
