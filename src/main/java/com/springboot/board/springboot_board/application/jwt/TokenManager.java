@@ -1,5 +1,6 @@
 package com.springboot.board.springboot_board.application.jwt;
 
+import com.springboot.board.springboot_board.application.jwt.dto.TokenPayload;
 import com.springboot.board.springboot_board.application.jwt.dto.Tokens;
 import com.springboot.board.springboot_board.domain.member.Member;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,10 @@ public class TokenManager {
     private final TokenProvider tokenProvider;
 
     public Tokens issueToken(Member member) {
-        return tokenProvider.creatTokens(member.createTokenPayload());
+        return tokenProvider.creatTokens(createTokenPayload(member));
+    }
+
+    private TokenPayload createTokenPayload(Member member) {
+        return TokenPayload.of(member.getLoginId(), member.getRole().getValue());
     }
 }

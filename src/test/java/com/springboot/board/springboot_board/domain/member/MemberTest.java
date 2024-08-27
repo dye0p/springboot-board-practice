@@ -1,6 +1,5 @@
 package com.springboot.board.springboot_board.domain.member;
 
-import com.springboot.board.springboot_board.application.jwt.dto.TokenPayload;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -64,22 +63,6 @@ class MemberTest {
         //then
         assertThat(member.getRole().getValue()).isEqualTo("ROLE_USER");
     }
-
-    @DisplayName("Member의 loginId, role 필드로 TokenPayload를 생성할 수 있다.")
-    @Test
-    void createTokenPayload() {
-        //given
-        final Member member = createMemmber();
-
-        //when
-        TokenPayload tokenPayload = member.createTokenPayload();
-
-        //then
-        assertThat(tokenPayload).isNotNull();
-        assertThat(tokenPayload.memberId()).isEqualTo("loginId");
-        assertThat(tokenPayload.role()).isEqualTo("ROLE_USER");
-    }
-
     private Member createMemmber() {
         return Member.create("loginId", "password", "nickname",
                 "email", "phone", passwordEncoder);
