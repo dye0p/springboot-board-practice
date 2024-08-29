@@ -6,29 +6,34 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
-import org.springframework.data.redis.core.index.Indexed;
+import org.springframework.data.redis.core.TimeToLive;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@RedisHash(value = "refreshToken", timeToLive = 60) //test를 위해서 만료시간을 1분으로 설정
+@RedisHash(value = "refreshToken")
 public class Token {
+    private static final Long REFRESH_EXPIRATION_TIME = 86400L;
 
     @Id
     private String loginId;
 
-    @Indexed
     private String refreshToken;
 
+    @TimeToLive
+    private Long refreshExpirationTime;
+
     @Builder
-    protected Token(String loginId, String refreshToken) {
+    private Token(String loginId, String refreshToken, Long refreshExpirationTime) {
         this.loginId = loginId;
         this.refreshToken = refreshToken;
+        this.refreshExpirationTime = refreshExpirationTime;
     }
 
     public static Token of(String loginId, String refreshToken) {
         return Token.builder()
                 .loginId(loginId)
                 .refreshToken(refreshToken)
+                .refreshExpirationTime(REFRESH_EXPIRATION_TIME)
                 .build();
     }
 }
