@@ -3,7 +3,6 @@ package com.springboot.board.springboot_board.presentation.auth;
 import com.springboot.board.springboot_board.application.auth.AuthService;
 import com.springboot.board.springboot_board.application.auth.dto.MailSendRequest;
 import com.springboot.board.springboot_board.application.auth.dto.MailVerifyRequest;
-import com.springboot.board.springboot_board.application.jwt.TokenService;
 import com.springboot.board.springboot_board.application.jwt.dto.Tokens;
 import com.springboot.board.springboot_board.application.member.dto.request.MemberLoginRequest;
 import com.springboot.board.springboot_board.global.response.ApiResponse;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
-    private final TokenService tokenService;
 
     @PostMapping("/v2/auth/auth-code")
     public ResponseEntity<ApiResponse<Void>> sendEmail(@RequestBody @Valid MailSendRequest mailSendRequest) {
@@ -36,13 +34,13 @@ public class AuthController {
 
     @PostMapping("/v2/login")
     public ResponseEntity<ApiResponse<Tokens>> doLogin(@RequestBody @Valid MemberLoginRequest memberLoginRequest) {
-        Tokens token = tokenService.login(memberLoginRequest);
+        Tokens token = authService.login(memberLoginRequest);
         return ResponseEntity.ok(SuccessResponse.of(token));
     }
 
     @GetMapping("/v1/logout")
     public ResponseEntity<ApiResponse<Void>> doLogout(HttpServletRequest request) {
-        tokenService.logout(request);
+        authService.logout(request);
         return ResponseEntity.ok(SuccessResponse.ok());
     }
 }
