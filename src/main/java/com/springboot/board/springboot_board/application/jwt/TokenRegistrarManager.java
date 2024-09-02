@@ -16,14 +16,14 @@ public class TokenRegistrarManager implements TokenRegistrar {
     private final TokenRepository tokenRepository;
 
     @Override
-    public void blackListResgistor(String accessToken, Long expiration) {
-        BlackList blackList = BlackList.of(accessToken, expiration);
-        blackListRepository.save(blackList);
-    }
-
-    @Override
     public void refreshRegistor(Member member, String refreshToken) {
         Token thisRefreshtoken = Token.of(member.getLoginId(), refreshToken);
         tokenRepository.save(thisRefreshtoken);
+    }
+
+    @Override
+    public void blackListResgistor(String accessToken, Long expiration) {
+        BlackList blackList = BlackList.of(accessToken, expiration);
+        blackListRepository.save(blackList);
     }
 }
