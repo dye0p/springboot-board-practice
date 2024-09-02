@@ -10,20 +10,19 @@ import org.springframework.stereotype.Service;
 public class TokenService {
     private static final int MILLISECONDS_IN_SECOND = 1000;
 
-    private final TokenManager tokenManager;
+    private final TokenCreator tokenCreator;
     private final TokenRegistrar tokenRegistrar;
-    private final BlackListRegistrar blackListRegistrar;
     private final TokenExpirationManager tokenExpirationManager;
 
     public Tokens saveToken(final Member member) {
-        Tokens tokens = tokenManager.issueToken(member);
-        tokenRegistrar.registrarToken(member, tokens.refreshToken());
+        Tokens tokens = tokenCreator.issueToken(member);
+        tokenRegistrar.refreshRegistor(member, tokens.refreshToken());
         return tokens;
     }
 
     public void saveBlackList(final String accessToken) {
         Long expriration = tokenExpirationManager.getExpriration(accessToken);
-        blackListRegistrar.registrarBlackListToken(accessToken, expriration / MILLISECONDS_IN_SECOND);
+        tokenRegistrar.blackListResgistor(accessToken, expriration / MILLISECONDS_IN_SECOND);
     }
 
 }
