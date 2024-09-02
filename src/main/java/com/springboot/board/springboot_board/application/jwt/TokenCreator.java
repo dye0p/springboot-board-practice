@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-public class TokenManager {
+public class TokenCreator {
 
     private final TokenProvider tokenProvider;
 
