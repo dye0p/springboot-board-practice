@@ -1,11 +1,10 @@
 package com.springboot.board.springboot_board.global.exception.errorcode;
 
 
+import java.util.Arrays;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-
-import java.util.Arrays;
 
 @Getter
 @RequiredArgsConstructor

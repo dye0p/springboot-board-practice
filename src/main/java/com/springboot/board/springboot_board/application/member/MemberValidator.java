@@ -14,12 +14,14 @@ public class MemberValidator {
     private final MemberRepository memberRepository;
 
     public void validateDuplicatedToEmail(final String email) {
-        if (memberRepository.existsByEmail(email))
+        if (memberRepository.existsByEmail(email)) {
             throw new MemberException(MemberErrorCode.EMAIL_DUPLICATION);
+        }
     }
 
     public void validateDuplicatedToLoginId(final String loginId) {
-        if (memberRepository.existsByLoginId(loginId))
+        if (memberRepository.existsByLoginId(loginId)) {
             throw new MemberException(MemberErrorCode.LOGINID_DUPLICATION);
+        }
     }
 }

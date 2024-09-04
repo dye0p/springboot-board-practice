@@ -1,14 +1,13 @@
 package com.springboot.board.springboot_board.domain.member;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.springboot.board.springboot_board.IntegrationTestSupport;
+import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class MemberRepositoryTest extends IntegrationTestSupport {
 
@@ -36,7 +35,6 @@ class MemberRepositoryTest extends IntegrationTestSupport {
                 .build();
 
         memberRepository.save(member);
-
 
         //when
         boolean result = memberRepository.existsByEmail(email);

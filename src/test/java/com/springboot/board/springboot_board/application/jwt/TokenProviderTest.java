@@ -1,14 +1,14 @@
 package com.springboot.board.springboot_board.application.jwt;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import com.springboot.board.springboot_board.application.jwt.dto.TokenPayload;
 import com.springboot.board.springboot_board.application.jwt.dto.Tokens;
 import com.springboot.board.springboot_board.global.exception.custom.JwtAuthenticationException;
 import com.springboot.board.springboot_board.global.properties.JwtProperties;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class TokenProviderTest {
 

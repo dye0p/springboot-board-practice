@@ -1,12 +1,11 @@
 package com.springboot.board.springboot_board.global.properties;
 
 import io.jsonwebtoken.Jwts;
-import lombok.Getter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
+import java.nio.charset.StandardCharsets;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
+import lombok.Getter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter
 @ConfigurationProperties(prefix = "jwt")

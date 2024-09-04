@@ -1,8 +1,8 @@
 package com.springboot.board.springboot_board.application.member;
 
-import com.springboot.board.springboot_board.domain.member.Member;
-import com.springboot.board.springboot_board.application.member.dto.response.MemberSaveResponse;
 import com.springboot.board.springboot_board.application.member.dto.request.MemberSaveRequest;
+import com.springboot.board.springboot_board.application.member.dto.response.MemberSaveResponse;
+import com.springboot.board.springboot_board.domain.member.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

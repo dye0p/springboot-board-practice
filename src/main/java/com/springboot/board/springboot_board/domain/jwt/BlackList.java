@@ -25,6 +25,7 @@ public class BlackList {
         this.accessToken = accessToken;
         this.expirationTime = expirationTime;
     }
+
     public static BlackList of(String accessToken, Long expirationTime) {
         return BlackList.builder()
                 .accessToken(accessToken)

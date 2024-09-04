@@ -1,9 +1,8 @@
 package com.springboot.board.springboot_board.global.properties;
 
+import java.util.Properties;
 import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-
-import java.util.Properties;
 
 @Getter
 @ConfigurationProperties(prefix = "spring.mail")
@@ -21,7 +20,9 @@ public class MailProperties {
     private int writeTimeout;
     private Properties properties;
 
-    public MailProperties(String host, int port, String username, String password, boolean auth, boolean starttlsEnable, boolean starttlsRequired, int connectionTimeout, int timeout, int writeTimeout, Properties properties) {
+    public MailProperties(String host, int port, String username, String password, boolean auth, boolean starttlsEnable,
+                          boolean starttlsRequired, int connectionTimeout, int timeout, int writeTimeout,
+                          Properties properties) {
         this.host = host;
         this.port = port;
         this.username = username;

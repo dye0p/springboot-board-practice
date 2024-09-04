@@ -1,10 +1,10 @@
 package com.springboot.board.springboot_board.global.exception;
 
-import com.springboot.board.springboot_board.global.response.ApiResponse;
-import com.springboot.board.springboot_board.global.response.FailResponse;
 import com.springboot.board.springboot_board.global.exception.custom.MailException;
 import com.springboot.board.springboot_board.global.exception.custom.MemberException;
 import com.springboot.board.springboot_board.global.exception.errorcode.ErrorCode;
+import com.springboot.board.springboot_board.global.response.ApiResponse;
+import com.springboot.board.springboot_board.global.response.FailResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiResponse<Object>> methodArgumentNotValidException(final MethodArgumentNotValidException exception) {
+    public ResponseEntity<ApiResponse<Object>> methodArgumentNotValidException(
+            final MethodArgumentNotValidException exception) {
         String defaultMessage = exception.getBindingResult().getAllErrors().get(0).getDefaultMessage();
 
         log.warn(defaultMessage, exception);

@@ -6,5 +6,6 @@ import org.springframework.stereotype.Component;
 @Component
 public interface TokenRegistrar {
     void blackListResgistor(String accessToken, Long expiration);
+
     void refreshRegistor(Member member, String refreshToken);
 }

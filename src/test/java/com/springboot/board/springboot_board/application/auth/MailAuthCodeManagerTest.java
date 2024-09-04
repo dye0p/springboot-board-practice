@@ -1,5 +1,11 @@
 package com.springboot.board.springboot_board.application.auth;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import com.springboot.board.springboot_board.IntegrationTestSupport;
 import com.springboot.board.springboot_board.domain.opt.AuthCodeRepository;
 import com.springboot.board.springboot_board.domain.opt.MailAuthCode;
@@ -8,12 +14,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 class MailAuthCodeManagerTest extends IntegrationTestSupport {
 

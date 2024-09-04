@@ -1,5 +1,10 @@
 package com.springboot.board.springboot_board.application.auth;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
+
 import com.springboot.board.springboot_board.IntegrationTestSupport;
 import com.springboot.board.springboot_board.application.auth.dto.MailSendRequest;
 import com.springboot.board.springboot_board.application.auth.dto.MailVerifyRequest;
@@ -9,9 +14,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.verify;
 
 class AuthServiceTest extends IntegrationTestSupport {
 

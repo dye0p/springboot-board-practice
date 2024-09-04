@@ -1,5 +1,8 @@
 package com.springboot.board.springboot_board.application.member;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import com.springboot.board.springboot_board.IntegrationTestSupport;
 import com.springboot.board.springboot_board.application.member.dto.request.MemberSaveRequest;
 import com.springboot.board.springboot_board.application.member.dto.response.MemberSaveResponse;
@@ -11,9 +14,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 class MemberServiceTest extends IntegrationTestSupport {

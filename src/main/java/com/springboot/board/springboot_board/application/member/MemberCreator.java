@@ -1,7 +1,7 @@
 package com.springboot.board.springboot_board.application.member;
 
-import com.springboot.board.springboot_board.domain.member.Member;
 import com.springboot.board.springboot_board.application.member.dto.request.MemberSaveRequest;
+import com.springboot.board.springboot_board.domain.member.Member;
 import com.springboot.board.springboot_board.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -1,6 +1,8 @@
 package com.springboot.board.springboot_board.application.jwt;
 
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.springboot.board.springboot_board.IntegrationTestSupport;
 import com.springboot.board.springboot_board.domain.jwt.BlackList;
 import com.springboot.board.springboot_board.domain.jwt.BlackListRepository;
@@ -12,8 +14,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class TokenRegistrarManagerTest extends IntegrationTestSupport {
 

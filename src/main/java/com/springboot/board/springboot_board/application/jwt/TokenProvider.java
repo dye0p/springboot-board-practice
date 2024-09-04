@@ -11,11 +11,10 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SignatureException;
+import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -28,7 +27,8 @@ public class TokenProvider {
 
     public Tokens creatTokens(TokenPayload tokenPayload) {
         return Tokens.of(
-                createAccessToken(tokenPayload.memberId(), tokenPayload.role(), jwtProperties.getAccessExpirationTime()),
+                createAccessToken(tokenPayload.memberId(), tokenPayload.role(),
+                        jwtProperties.getAccessExpirationTime()),
                 createRefreshToken(jwtProperties.getRefreshExpirationTime())
         );
     }

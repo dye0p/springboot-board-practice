@@ -1,5 +1,6 @@
 package com.springboot.board.springboot_board.domain.opt;
 
+import java.security.SecureRandom;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -7,8 +8,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
-
-import java.security.SecureRandom;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

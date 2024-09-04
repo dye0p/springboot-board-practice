@@ -1,7 +1,7 @@
 package com.springboot.board.springboot_board.global.config;
 
-import com.springboot.board.springboot_board.application.jwt.TokenResolver;
 import com.springboot.board.springboot_board.application.jwt.TokenProvider;
+import com.springboot.board.springboot_board.application.jwt.TokenResolver;
 import com.springboot.board.springboot_board.global.auth.jwt.exception.JwtAuthenticationEntryPoint;
 import com.springboot.board.springboot_board.global.auth.jwt.filter.JwtAuthenticationFilter;
 import com.springboot.board.springboot_board.global.auth.jwt.filter.JwtExceptionFilter;
@@ -51,7 +51,8 @@ public class SecurityConfig {
                         auth.anyRequest().authenticated());
 
         http
-                .addFilterBefore(new JwtAuthenticationFilter(tokenProvider, tokenResolver), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(tokenProvider, tokenResolver),
+                        UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JwtExceptionFilter(), JwtAuthenticationFilter.class)
                 .sessionManagement((session) -> session.
                         sessionCreationPolicy(SessionCreationPolicy.STATELESS))

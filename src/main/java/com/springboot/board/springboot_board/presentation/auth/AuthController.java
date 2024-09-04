@@ -11,7 +11,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -27,7 +31,8 @@ public class AuthController {
     }
 
     @GetMapping("/v2/auth/auth-code")
-    public ResponseEntity<ApiResponse<Void>> verifyMailAuthCode(@RequestBody @Valid MailVerifyRequest mailVerifyRequest) {
+    public ResponseEntity<ApiResponse<Void>> verifyMailAuthCode(
+            @RequestBody @Valid MailVerifyRequest mailVerifyRequest) {
         authService.verifyAuthCode(mailVerifyRequest);
         return ResponseEntity.ok(SuccessResponse.ok("인증되었습니다"));
     }
